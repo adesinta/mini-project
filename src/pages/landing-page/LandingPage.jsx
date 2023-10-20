@@ -1,9 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import welcomeImage from "../../assets/welcome-image.svg";
 import AboutImage from "../../assets/about-image.svg";
 
 import Navbar from "../../components/Navbar";
+import ChatBox from "./ChatBox";
 import ContactUs from "./ContactUs";
 
 const LandingPage = () => {
@@ -18,9 +20,11 @@ const LandingPage = () => {
           Temukan Kesehatan dalam Setiap Gigitan! Pilih Sayuran dan Buah-buahan
           Berkualitas Tinggi Hanya di Sini.
         </p>
+        <Link to={"/sign-up"}>
         <button className="bg-[#347C00] hover:bg-[#2B6700] w-40 h-10 rounded mt-6">
           Sign Up Now
         </button>
+        </Link>
         <img src={welcomeImage} alt="" className="mt-8 rounded-lg" />
       </div>
       <div className="p-10 flex flex-col justify-center items-center text-justify gap-y-4">
@@ -38,6 +42,7 @@ const LandingPage = () => {
         </p>
         <img src={AboutImage} alt="" className="rounded-lg" />
       </div>
+      <ChatBox/>
       <ContactUs/>
       <div className="bg-[#2B6700] p-4">
         <p> &copy; Copyright FreshMarket. All Right reserved.</p>

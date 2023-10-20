@@ -9,7 +9,7 @@ const Input = ({id, placeholder, value, onChange }) => {
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className='w-[400px] h-10 border rounded focus:outline-none p-3' />
+      className='w-[400px] border-none h-10 rounded focus:outline-none p-3 text-black' />
     </div>
   )
 }
