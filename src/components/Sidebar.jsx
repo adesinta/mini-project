@@ -4,9 +4,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logoImg from "../assets/logo.svg";
 import dashboardIcon from "../assets/dashboard-icon.svg";
 import productsIcon from "../assets/add-products-icon.svg";
+import logoutIcon from "../assets/logout.svg"
 
 const Sidebar = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dataSidebar = [
     {
       id: 1,
@@ -51,6 +52,12 @@ const Sidebar = () => {
           ))}
         </div>
       </div>
+      <button
+      onClick={() => navigate("/sign-in")}
+      className="flex gap-3 p-5 rounded-[10px] hover:bg-[#347c00]">
+        <img src={logoutIcon} alt="" />
+        <p>Logout</p>
+      </button>
     </div>
   );
 };

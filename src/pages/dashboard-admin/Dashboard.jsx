@@ -9,14 +9,19 @@ const Dashboard = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all"); 
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 8;
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://652fc8d06c756603295da8c8.mockapi.io/products"
-      );
+      let apiUrl = "https://652fc8d06c756603295da8c8.mockapi.io/products";
+
+      if (categoryFilter !== "all") {
+        apiUrl += `?category=${categoryFilter}`;
+      }
+
+      const response = await axios.get(apiUrl);
 
       setProducts(response.data);
       setLoading(false);
@@ -28,14 +33,18 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [categoryFilter]); 
 
   const handleSearch = () => {
     const productsCopy = [...products];
 
-    const filteredProducts = productsCopy.filter((product) =>
-      product.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredProducts = productsCopy
+      .filter((product) =>
+        product.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .filter((product) =>
+        categoryFilter === "all" ? true : product.category === categoryFilter
+      );
 
     setProducts(filteredProducts);
   };
@@ -51,7 +60,11 @@ const Dashboard = () => {
   const firstCardIndex = lastCardIndex - cardsPerPage;
   const currentCards = products.slice(firstCardIndex, lastCardIndex);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= Math.ceil(totalCards / cardsPerPage)) {
+      setCurrentPage(pageNumber);
+    }
+  };
 
   return (
     <div className="flex">
@@ -61,20 +74,26 @@ const Dashboard = () => {
         <div className="flex justify-between">
           <div className="inline-flex rounded-md shadow-sm mt-10" role="group">
             <button
-              type="button"
-              className="w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border rounded-l-lg hover:bg-[#347C00] hover:text-white"
+              onClick={() => {
+                setCategoryFilter("all");
+              }}
+              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border rounded-l-lg hover:bg-[#347C00] hover:text-white`}
             >
               All Products
             </button>
             <button
-              type="button"
-              className="w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-[#347C00] hover:text-white "
+              onClick={() => {
+                setCategoryFilter("vegetables");
+              }}
+              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-[#347C00] hover:text-white `}
             >
               Vegetables
             </button>
             <button
-              type="button"
-              className="w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-[#347C00] hover:text-white "
+              onClick={() => {
+                setCategoryFilter("fruits");
+              }}
+              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-[#347C00] hover:text-white `}
             >
               Fruits
             </button>
@@ -109,33 +128,42 @@ const Dashboard = () => {
                   category={product?.category}
                   image={product?.image}
                   price={product?.price}
-                  description={product?.description}
                   showCartButton={false}
                 />
               ))}
             </div>
           )}
         </div>
-        <div className="mt-4 flex items-center justify-center">
-          {Array.from({ length: Math.ceil(totalCards / cardsPerPage) }).map(
-            (_, index) => (
-              <button
-                key={index}
-                onClick={() => paginate(index + 1)}
-                className={`mr-2 px-4 py-2 text-sm font-medium text-gray-900 bg-white border ${
-                  currentPage === index + 1
-                    ? "bg-[#347C00] text-slate-400"
-                    : "hover:bg-[#347C00] hover:text-white"
-                }`}
-              >
-                {index + 1}
-              </button>
-            )
-          )}
+        <div className="flex justify-between items-center mt-4">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`bg-[#347C00] hover:bg-[#2B6700] rounded-md px-4 py-2 text-white ${
+              currentPage === 1
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-[#2B6700] hover:text-white"
+            }`}
+          >
+            Previous Page
+          </button>
+          <div className="text-white">
+            Page {currentPage} of {Math.ceil(totalCards / cardsPerPage)}
+          </div>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={lastCardIndex >= totalCards}
+            className={`bg-[#347C00] hover:bg-[#2B6700] rounded-md px-4 py-2 text-white ${
+              lastCardIndex >= totalCards
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-[#2B6700] hover:text-white"
+            }`}
+          >
+            Next Page
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default Dashboard;  
+export default Dashboard;

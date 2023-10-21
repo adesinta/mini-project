@@ -6,6 +6,7 @@ import SignUp from "./pages/sign-up/SignUp";
 import Products from "./pages/products/Products";
 import Dashboard from "./pages/dashboard-admin/Dashboard";
 import ProductsTable from "./pages/dashboard-admin/ProductsTable";
+import DetailProducts from "./pages/products/DetailProducts";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route element={<SignUp />} path="/sign-up" />
           <Route element={<Dashboard />} path="/dashboard-admin" />
           <Route element={<ProductsTable />} path="/products-table" />
+          <Route element={<DetailProducts />} path="/details/:id" />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,11 +1,24 @@
 import React from "react";
 
-const Card = ({ id, title, category, price, description, image, showCartButton }) => {
+const Card = ({
+  id,
+  title,
+  category,
+  price,
+  description,
+  image,
+  showCartButton,
+}) => {
+
   return (
     <div
       id={id}
       className="bg-[#171A1F] text-white max-w-sm rounded overflow-hidden shadow-lg"
-      style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
     >
       <img
         src={
@@ -16,16 +29,28 @@ const Card = ({ id, title, category, price, description, image, showCartButton }
         alt={title}
         className="w-full h-48 object-cover"
       />
-      <div className="flex flex-col justify-between h-full p-4">
+      <div className="text-white flex flex-col justify-between h-full p-4">
         <div>
-          <div className="font-bold text-xl mb-2">{title}</div>
-          <p className="text-sm text-gray-400 mb-2">{category}</p>
-          <p className="text-base text-gray-300 mb-4">{description}</p>
+          <div className="font-bold text-xl pb-2 flex justify-between">
+            {title}
+            <p className="text-sm text-black pb-2 bg-[#62CD14] rounded-full w-24 h-6 text-center">
+              {category}
+            </p>
+          </div>
+          <p className="text-base text-gray-300 pb-4">{description}</p>
+          <p className="text-[#62CD14] font-bold text-xl">Rp. {price}</p>
         </div>
-        <div className="flex justify-between items-center">
-          <p className="text-[#62CD14] font-bold text-xl">{price}</p>
-          {showCartButton && <button className="px-4 py-2 bg-[#62CD14] rounded text-black">Add to Cart</button>}
-        </div>
+        <div className="flex justify-between items-center"></div>
+        <button
+          className="px-4 py-2 mt-4 rounded hover:text-[#62CD14] "
+        >
+          View Details
+        </button>
+        {showCartButton && (
+          <button className="px-4 py-2 mt-4 bg-[#62CD14] rounded hover:bg-[#469310] text-black">
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
   );

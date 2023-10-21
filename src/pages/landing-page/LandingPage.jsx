@@ -13,7 +13,7 @@ const LandingPage = () => {
     <div className="bg-black text-white">
       <Navbar />
       <div className="p-10 flex flex-col text-center gap-y-2  items-center">
-        <h1 className="font-bold text-4xl">
+        <h1 className="font-bold text-4xl pt-20">
           Welcome to <span className="text-[#62CD14]">Fresh Market</span>
         </h1>
         <p>

@@ -4,7 +4,7 @@ import LogoMarket from "../assets/logo.svg"
 
 const Navbar = () => {
   return (
-    <div className='bg-black p-4 text-white flex justify-between'>
+    <div className='bg-black p-4 fixed left-0 right-0 text-white flex justify-between'>
       <Link to={"/"}>
       <div className='flex gap-x-2 cursor-default'>
         <img src={LogoMarket} alt="" />
