@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Sidebar from "../../components/Sidebar";
@@ -6,6 +7,7 @@ import Search from "../../components/Search";
 import Card from "../../components/Card";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -126,6 +128,7 @@ const Dashboard = () => {
                   id={product?.id}
                   title={product?.title}
                   category={product?.category}
+                  description={product?.description}
                   image={product?.image}
                   price={product?.price}
                   showCartButton={false}

@@ -36,7 +36,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="flex justify-around p-10 gap-x-4">
+    <div id="contact-us" className="flex justify-around p-10 gap-x-4">
       <div className="flex flex-col justify-center">
         <h1 className="font-bold text-3xl pb-6">Contact Us</h1>
         <p className="">

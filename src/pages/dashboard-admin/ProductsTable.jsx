@@ -8,13 +8,16 @@ import plusIcon from "../../assets/plus-icon.svg";
 import Sidebar from "../../components/Sidebar";
 import Search from "../../components/Search";
 import CreateProductModal from "../../components/CreateProductModal";
+import EditProductModal from "../../components/EditProductModal";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchData = async () => {
@@ -56,6 +59,19 @@ const ProductsTable = () => {
     setShowModal(false);
   };
 
+  const editModal = (product) => {
+    setShowEditModal(true)
+  }
+
+  const closeEditModal = () => {
+    setShowEditModal(false);
+  };
+
+  const handleEditProduct = (product) => {
+    setSelectedProduct(product);
+    editModal()
+  };
+
   const handleDeleteProduct = async (productId) => {
     try {
       const result = await Swal.fire({
@@ -67,14 +83,14 @@ const ProductsTable = () => {
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Yes",
       });
-  
+
       if (result.isConfirmed) {
         const response = await axios.delete(
           `https://652fc8d06c756603295da8c8.mockapi.io/products/${productId}`
         );
-  
+
         console.log("Delete response:", response);
-  
+
         if (response.status === 200) {
           fetchData();
           Swal.fire("Deleted!", "Your product has been deleted.", "success");
@@ -124,9 +140,13 @@ const ProductsTable = () => {
         <div className="flex justify-between">
           <div className="flex gap-x-2">
             <Search
-             value={searchQuery}
-             onChange={(e) => setSearchQuery(e.target.value)}/>
-            <button  onClick={handleSearch} className="bg-[#347C00] hover:bg-[#2B6700] rounded-md w-28 h-13 mt-10">
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button
+              onClick={handleSearch}
+              className="bg-[#347C00] hover:bg-[#2B6700] rounded-md w-28 h-13 mt-10"
+            >
               Search
             </button>
           </div>
@@ -151,27 +171,13 @@ const ProductsTable = () => {
             <table className="w-full mt-10 text-sm text-left text-[#251C1C] dark:text-gray-400">
               <thead className="text-base bg-[#171A1F] text-white dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th  className="px-5 py-3">
-                    No
-                  </th>
-                  <th  className="px-5 py-3">
-                    Product Name
-                  </th>
-                  <th  className="px-20 py-3">
-                    Category
-                  </th>
-                  <th  className="px-28 py-3">
-                    Image
-                  </th>
-                  <th  className="px-5 py-3">
-                    Description
-                  </th>
-                  <th  className="px-5 py-3">
-                    Price
-                  </th>
-                  <th  className="px-5 py-3">
-                    Action
-                  </th>
+                  <th className="px-5 py-3">No</th>
+                  <th className="px-5 py-3">Product Name</th>
+                  <th className="px-20 py-3">Category</th>
+                  <th className="px-28 py-3">Image</th>
+                  <th className="px-5 py-3">Description</th>
+                  <th className="px-5 py-3">Price</th>
+                  <th className="px-5 py-3">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -190,20 +196,30 @@ const ProductsTable = () => {
                     <td className="px-2 py-4 flex justify-center items-center pt-14">
                       {product?.image && (
                         <img
-                          src={(product?.image)}
+                          src={product?.image}
                           alt={product?.title}
-                          className="max-w-[150px] max-h-[150px]"
+                          className="max-w-[200px] max-h-[200px]"
                         />
                       )}
                     </td>
-                    <td className="px-6 py-4 w-[500px] text-justify">{product?.description}</td>
+                    <td className="px-6 py-4 w-[500px] text-justify">
+                      {product?.description}
+                    </td>
                     <td className="px-6 py-4 w-80">Rp. {product?.price}</td>
                     <td className="px-6 py-4">
                       <div className="flex gap-4">
-                        <button>
+                        <button onClick={() => handleEditProduct(product)}>
                           <img src={editIcon} alt="" />
                         </button>
-                      <button onClick={() => handleDeleteProduct(product?.id)}>
+                        <EditProductModal
+                          showEditModal={showEditModal}
+                          closeEditModal={closeEditModal}
+                          fetchData={fetchData}
+                          selectedProduct={selectedProduct}
+                        />
+                        <button
+                          onClick={() => handleDeleteProduct(product?.id)}
+                        >
                           <img src={deleteIcon} alt="" />
                         </button>
                       </div>

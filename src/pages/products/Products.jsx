@@ -14,6 +14,8 @@ const Products = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 10;
 
   const fetchData = async () => {
     try {
@@ -57,9 +59,22 @@ const Products = () => {
     }
   }, [searchQuery]);
 
+  const totalCards = products.length;
+  const lastCardIndex = currentPage * cardsPerPage;
+  const firstCardIndex = lastCardIndex - cardsPerPage;
+  const currentCards = products.slice(firstCardIndex, lastCardIndex);
+
+  const paginate = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= Math.ceil(totalCards / cardsPerPage)) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
   return (
     <div className="w-full h-screen bg-black">
-      <Navbar />
+      <Navbar 
+      showCartButton={false}
+      />
       <div className="bg-black ">
         <img src={productsHeader} alt="" className="w-full" />
         <div className="flex justify-between px-8">
@@ -109,8 +124,8 @@ const Products = () => {
             </p>
           </div>
         ) : (
-          <div className="w-xl p-8 grid grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-4">
-            {products.map((product, index) => (
+          <div className="w-2xl p-8 grid grid-cols-5 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {currentCards.map((product, index) => (
                 <Card
                   key={index}
                   id={product?.id}
@@ -119,10 +134,42 @@ const Products = () => {
                   image={product?.image}
                   price={product?.price}
                   showCartButton={true}
+                  onClick={() => {
+                    navigate(`/details/${product?.id}`, {
+                      state: {product},
+                    })
+                  }}
                 />
             ))}
           </div>
         )}
+      <div className="flex justify-between items-center px-8 pb-8">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`bg-[#347C00] hover:bg-[#2B6700] rounded-md px-4 py-2 text-white ${
+              currentPage === 1
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-[#2B6700] hover:text-white"
+            }`}
+          >
+            Previous Page
+          </button>
+          <div className="text-white">
+            Page {currentPage} of {Math.ceil(totalCards / cardsPerPage)}
+          </div>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={lastCardIndex >= totalCards}
+            className={`bg-[#347C00] hover:bg-[#2B6700] rounded-md px-4 py-2 text-white ${
+              lastCardIndex >= totalCards
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-[#2B6700] hover:text-white"
+            }`}
+          >
+            Next Page
+          </button>
+        </div>
       </div>
     </div>
   );

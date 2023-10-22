@@ -7,9 +7,9 @@ const Card = ({
   price,
   description,
   image,
+  onClick,
   showCartButton,
 }) => {
-
   return (
     <div
       id={id}
@@ -27,7 +27,7 @@ const Card = ({
             : "https://placehold.co/600x500"
         }
         alt={title}
-        className="w-full h-48 object-cover"
+        className="w-full h-60 object-cover"
       />
       <div className="text-white flex flex-col justify-between h-full p-4">
         <div>
@@ -37,15 +37,19 @@ const Card = ({
               {category}
             </p>
           </div>
-          <p className="text-base text-gray-300 pb-4">{description}</p>
-          <p className="text-[#62CD14] font-bold text-xl">Rp. {price}</p>
+          <div>
+            <p className="text-base text-gray-300 pb-4 text-justify">
+              {description}
+            </p>
+          </div>
+          <p className="text-yellow-300 font-bold text-xl">Rp. {price}</p>
         </div>
         <div className="flex justify-between items-center"></div>
-        <button
-          className="px-4 py-2 mt-4 rounded hover:text-[#62CD14] "
-        >
-          View Details
-        </button>
+        {showCartButton && (
+          <button onClick={onClick} className="px-4 py-2 mt-4 rounded hover:text-[#62CD14] ">
+            View Details
+          </button>
+        )}
         {showCartButton && (
           <button className="px-4 py-2 mt-4 bg-[#62CD14] rounded hover:bg-[#469310] text-black">
             Add to Cart

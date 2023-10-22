@@ -11,8 +11,9 @@ import ContactUs from "./ContactUs";
 const LandingPage = () => {
   return (
     <div className="bg-black text-white">
-      <Navbar />
-      <div className="p-10 flex flex-col text-center gap-y-2  items-center">
+      <Navbar 
+      showNavbarOption={true}/>
+      <div id="home" className="p-10 flex flex-col text-center gap-y-2  items-center">
         <h1 className="font-bold text-4xl pt-20">
           Welcome to <span className="text-[#62CD14]">Fresh Market</span>
         </h1>
@@ -27,7 +28,7 @@ const LandingPage = () => {
         </Link>
         <img src={welcomeImage} alt="" className="mt-8 rounded-lg" />
       </div>
-      <div className="p-10 flex flex-col justify-center items-center text-justify gap-y-4">
+      <div id="about-us" className="p-10 flex flex-col justify-center items-center text-justify gap-y-4">
         <h1 className="font-bold text-4xl pt-14">About Us</h1>
         <p className="px-36 leading-loose">
           Welcome to Fresh Market, your ultimate destination for a high-quality

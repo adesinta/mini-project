@@ -35,7 +35,7 @@ const ChatBox = () => {
 
   console.log("result", result);
   return (
-    <div>
+    <div id="chatbox">
       <div className="w-full h-screen flex flex-col justify-center items-center">
         <h1 className="font-bold text-4xl">ChatBox</h1>
         <p className="font-extralight pb-8 pt-2">
