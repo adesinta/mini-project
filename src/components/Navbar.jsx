@@ -1,14 +1,46 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDarkMode } from "../components/Darkmode";
 import LogoMarket from "../assets/logo.svg";
+import cartIcon from "../assets/cart-white.svg";
+import ToggleButton from "./ToggleDarkMode";
 
 const Navbar = ({ showNavbarOption }) => {
+  const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
+
+  const navbarStyle = {
+    backgroundColor: darkMode ? "#000000" : "#ffffff",
+    color: darkMode ? "white" : "#000000",
+    boxShadow: darkMode
+      ? "2px 2px 5px rgba(255, 255, 255, 0.1)"
+      : "2px 2px 5px rgba(0, 0, 0, 0.1)",
+  };
+
+  const headerStyle = {
+    color: darkMode ? "white" : "#000000",
+  };
+
+  const signUpStyle = {
+    color: darkMode ? "white" : "white",
+  };
+
+  const cartIconStyle = {
+    filter: darkMode ? "invert(1)" : "invert(0)",
+  };
+
   return (
-    <div className="bg-black p-4 fixed left-0 right-0 text-white flex justify-between">
+    <div
+      className=" p-4 fixed left-0 right-0 text-white flex justify-between"
+      style={navbarStyle}
+    >
       <Link to={"/"}>
         <div className="flex gap-x-2 cursor-default">
           <img src={LogoMarket} alt="" />
-          <h1 className="text-white text-2xl font-bold flex items-center">
+          <h1
+            className="text-white text-2xl font-bold flex items-center"
+            style={headerStyle}
+          >
             Fresh<span className="text-[#62CD14]">Market</span>
           </h1>
         </div>
@@ -32,15 +64,32 @@ const Navbar = ({ showNavbarOption }) => {
           </a>
         </div>
       )}
-      <div className="flex items-center gap-x-4">
-        <Link to={"/sign-in"}>
-          <button className="hover:text-[#62CD14]">Sign In</button>
-        </Link>
-        <Link to={"/sign-up"}>
-          <button className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]">
-            Sign Up
-          </button>
-        </Link>
+      <div className="flex items-center gap-x-10">
+        <div className="flex gap-x-4">
+          <img
+            src={cartIcon}
+            alt=""
+            width={30}
+            style={{ ...cartIconStyle, fill: darkMode ? "white" : "black" }}
+          />
+          <ToggleButton />
+        </div>
+        <div className="flex items-center gap-x-4">
+          <button
+           onClick={() => {
+            navigate("/sign-in")
+           }}
+           className="hover:text-[#62CD14]" >Sign In</button>
+            <button
+                onClick={() => {
+                  navigate("/sign-up")
+                 }}
+              className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]"
+              style={signUpStyle}
+            >
+              Sign Up
+            </button>
+        </div>
       </div>
     </div>
   );

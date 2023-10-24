@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDarkMode } from "../../components/Darkmode";
 import axios from "axios";
 
 import productsHeader from "../../assets/products-header.svg";
@@ -9,6 +10,7 @@ import Card from "../../components/Card";
 import Search from "../../components/Search";
 
 const Products = () => {
+  const { darkMode } = useDarkMode();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,6 +18,12 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 10;
+
+  const pageStyle = {
+    backgroundColor: darkMode ? "#000000" : "#ffffff",
+    color: darkMode ? "#ffffff" : "#000000",
+    minHeight: "100vh",
+  };
 
   const fetchData = async () => {
     try {
@@ -71,11 +79,11 @@ const Products = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-black">
+    <div className="w-full h-screen">
       <Navbar 
       showCartButton={false}
       />
-      <div className="bg-black ">
+      <div style={pageStyle}>
         <img src={productsHeader} alt="" className="w-full" />
         <div className="flex justify-between px-8">
           <div className="inline-flex rounded-md shadow-sm mt-10" role="group">
@@ -83,7 +91,7 @@ const Products = () => {
               onClick={() => {
                 setCategoryFilter("all");
               }}
-              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border rounded-l-lg hover:bg-[#347C00] hover:text-white`}
+              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-500 rounded-l-lg hover:bg-[#347C00] hover:text-white`}
             >
               All Products
             </button>
@@ -91,7 +99,7 @@ const Products = () => {
               onClick={() => {
                 setCategoryFilter("vegetables");
               }}
-              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-[#347C00] hover:text-white `}
+              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-500 hover:bg-[#347C00] hover:text-white `}
             >
               Vegetables
             </button>
@@ -99,7 +107,7 @@ const Products = () => {
               onClick={() => {
                 setCategoryFilter("fruits");
               }}
-              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-[#347C00] hover:text-white `}
+              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-500 rounded-r-md hover:bg-[#347C00] hover:text-white `}
             >
               Fruits
             </button>

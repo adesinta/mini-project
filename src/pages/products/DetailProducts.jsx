@@ -8,7 +8,7 @@ const DetailProducts = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const product = location.state.product;
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
 
   const handleIncreaseQuantity = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);

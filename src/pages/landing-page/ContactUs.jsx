@@ -54,7 +54,7 @@ const ContactUs = () => {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="pl-2 py-[6px] border-none text-black rounded-[4px]"
+                className="pl-2 py-[6px] text-black rounded-[4px]"
               />
             </div>
           <div className="flex flex-col">
@@ -64,7 +64,7 @@ const ContactUs = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="pl-2 py-[6px] text-black border-none rounded-[4px]"
+              className="pl-2 py-[6px] text-black  rounded-[4px]"
             />
           </div>
           <div className="flex flex-col">
@@ -74,7 +74,7 @@ const ContactUs = () => {
               value={formData.message}
               onChange={handleChange}
               rows="3"
-              className="pl-2 py-[6px] border-none text-black rounded-[4px] "
+              className="pl-2 py-[6px]  text-black rounded-[4px] "
             ></textarea>
           </div>
           <button

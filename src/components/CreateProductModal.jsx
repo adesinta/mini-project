@@ -12,6 +12,7 @@ const CreateProductModal = ({
 }) => {
   const navigate = useNavigate();
   const [imageError, setImageError] = useState("");
+  const [errors, setErrors] = useState({});
 
   const [newProduct, setNewProduct] = useState({
     title: "",
@@ -23,49 +24,71 @@ const CreateProductModal = ({
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "price" && !/^\d+$/.test(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "Price must be a valid positive number",
+      }));
+      return;
+    }
+
     setNewProduct((prevProduct) => ({
       ...prevProduct,
       [name]: value,
     }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
   };
 
   const handleImageChange = async (e) => {
-  const file = e.target.files[0];
+    const file = e.target.files[0];
 
-  if (file && !file.type.startsWith("image/")) {
-    setImageError("The selected file is not an image.");
-  } else {
-    setImageError("");
+    if (file && !file.type.startsWith("image/")) {
+      setImageError("The selected file is not an image.");
+    } else {
+      setImageError("");
 
-    const options = {
-      maxSizeMB: 0.05,
-      useWebWorker: true,
-    };
-
-    try {
-      const compressedFile = await imageCompression(file, options);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNewProduct((prevProduct) => ({ ...prevProduct, image: reader.result }));
+      const options = {
+        maxSizeMB: 0.05,
+        useWebWorker: true,
       };
-      reader.readAsDataURL(compressedFile);
-    } catch (error) {
-      console.error("Error compressing image:", error);
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setNewProduct((prevProduct) => ({
+            ...prevProduct,
+            image: reader.result,
+          }));
+        };
+        reader.readAsDataURL(compressedFile);
+      } catch (error) {
+        console.error("Error compressing image:", error);
+      }
     }
-  }
-};
+  };
 
   const handleCreateProduct = async () => {
+    const validationErrors = validateForm(newProduct);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     try {
       const response = await axios.post(
         "https://652fc8d06c756603295da8c8.mockapi.io/products",
         newProduct
       );
-  
+
       if (response.status === 201) {
         fetchData();
         closeModal();
-  
+
         await Swal.fire({
           icon: "success",
           title: "Product added successfully!",
@@ -75,7 +98,7 @@ const CreateProductModal = ({
             navigate("/products-table");
           }
         });
-  
+
         setNewProduct({
           title: "",
           category: "",
@@ -83,14 +106,45 @@ const CreateProductModal = ({
           description: "",
           price: "",
         });
-  
+
         afterCreate();
       } else {
-        console.error("Error creating product. Unexpected status:", response.status);
+        console.error(
+          "Error creating product. Unexpected status:",
+          response.status
+        );
       }
     } catch (error) {
       console.error("Error creating product:", error);
     }
+  };
+
+  const validateForm = (formData) => {
+    const errors = {};
+
+    if (!formData.title) {
+      errors.title = "Product Name is required";
+    }
+
+    if (!formData.category) {
+      errors.category = "Category is required";
+    }
+
+    if (!formData.image) {
+      errors.image = "Image is required";
+    }
+
+    if (!formData.description) {
+      errors.description = "Description is required";
+    }
+
+    if (!formData.price) {
+      errors.price = "Price is required";
+    } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
+      errors.price = "Price must be a valid positive number";
+    }
+
+    return errors;
   };
 
   return (
@@ -124,8 +178,13 @@ const CreateProductModal = ({
                     name="title"
                     value={newProduct.title}
                     onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className={`mt-1 p-2 border border-gray-300 rounded-md w-full ${
+                      errors.title ? "border-red-500" : ""
+                    }`}
                   />
+                  {errors.title && (
+                    <p className="text-red-500 text-xs mt-1">{errors.title}</p>
+                  )}
                 </div>
                 <div className="mb-4">
                   <label
@@ -139,7 +198,9 @@ const CreateProductModal = ({
                     name="category"
                     value={newProduct.category}
                     onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className={`mt-1 p-2 border border-gray-300 rounded-md w-full ${
+                      errors.category ? "border-red-500" : ""
+                    }`}
                   >
                     <option value="" disabled>
                       Select Category
@@ -147,6 +208,11 @@ const CreateProductModal = ({
                     <option value="vegetables">Vegetables</option>
                     <option value="fruits">Fruits</option>
                   </select>
+                  {errors.category && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.category}
+                    </p>
+                  )}
                 </div>
                 <div className="mb-4">
                   <label
@@ -160,8 +226,13 @@ const CreateProductModal = ({
                     id="image"
                     name="image"
                     onChange={handleImageChange}
-                    className="block w-full border rounded-lg"
+                    className={`block w-full border rounded-lg ${
+                      errors.image ? "border-red-500" : ""
+                    }`}
                   />
+                  {errors.image && (
+                    <p className="text-red-500 text-xs mt-1">{errors.image}</p>
+                  )}
                 </div>
                 <div className="mb-4">
                   <label
@@ -175,8 +246,15 @@ const CreateProductModal = ({
                     name="description"
                     value={newProduct.description}
                     onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className={`mt-1 p-2 border border-gray-300 rounded-md w-full ${
+                      errors.description ? "border-red-500" : ""
+                    }`}
                   ></textarea>
+                  {errors.description && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.description}
+                    </p>
+                  )}
                 </div>
                 <div className="mb-4">
                   <label
@@ -191,8 +269,13 @@ const CreateProductModal = ({
                     name="price"
                     value={newProduct.price}
                     onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    className={`mt-1 p-2 border border-gray-300 rounded-md w-full ${
+                      errors.price ? "border-red-500" : ""
+                    }`}
                   />
+                  {errors.price && (
+                    <p className="text-red-500 text-xs mt-1">{errors.price}</p>
+                  )}
                 </div>
               </form>
             </div>
