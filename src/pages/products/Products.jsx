@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../features/CartSlice";
+import { useDarkMode } from "../../components/Darkmode";
 import axios from "axios";
 
 import productsHeader from "../../assets/products-header.svg";
@@ -9,13 +12,29 @@ import Card from "../../components/Card";
 import Search from "../../components/Search";
 
 const Products = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
+
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
   const cardsPerPage = 10;
+  const totalCards = products.length;
+  const lastCardIndex = currentPage * cardsPerPage;
+  const firstCardIndex = lastCardIndex - cardsPerPage;
+  const currentCards = products.slice(firstCardIndex, lastCardIndex);
+
+  const pageStyle = {
+    backgroundColor: darkMode ? "#000000" : "#ffffff",
+    color: darkMode ? "#ffffff" : "#000000",
+    minHeight: "100vh",
+  };
 
   const fetchData = async () => {
     try {
@@ -35,10 +54,6 @@ const Products = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [categoryFilter]);
-
   const handleSearch = () => {
     const productsCopy = [...products];
 
@@ -53,16 +68,24 @@ const Products = () => {
     setProducts(filteredProducts);
   };
 
-  useEffect(() => {
-    if (searchQuery === "") {
-      fetchData();
+  const handleAddToCart = (product) => {
+    if (!isLoggedIn) {
+      console.log("Please log in to add items to the cart.");
+      return;
     }
-  }, [searchQuery]);
 
-  const totalCards = products.length;
-  const lastCardIndex = currentPage * cardsPerPage;
-  const firstCardIndex = lastCardIndex - cardsPerPage;
-  const currentCards = products.slice(firstCardIndex, lastCardIndex);
+    const newItem = {
+      id: product?.id,
+      title: product?.title,
+      image: product?.image,
+      category: product?.category,
+      description: product?.description,
+      price: product?.price,
+    };
+
+    dispatch(addItem(newItem));
+    navigate("/cart");
+  };
 
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= Math.ceil(totalCards / cardsPerPage)) {
@@ -70,12 +93,24 @@ const Products = () => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [categoryFilter]);
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      fetchData();
+    }
+  }, [searchQuery]);
+
+  useEffect(() => {
+    document.title = "Products Page";
+  }, []);
+
   return (
-    <div className="w-full h-screen bg-black">
-      <Navbar 
-      showCartButton={false}
-      />
-      <div className="bg-black ">
+    <div className="w-full h-screen">
+      <Navbar showCartButton={false} />
+      <div style={pageStyle}>
         <img src={productsHeader} alt="" className="w-full" />
         <div className="flex justify-between px-8">
           <div className="inline-flex rounded-md shadow-sm mt-10" role="group">
@@ -83,7 +118,7 @@ const Products = () => {
               onClick={() => {
                 setCategoryFilter("all");
               }}
-              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border rounded-l-lg hover:bg-[#347C00] hover:text-white`}
+              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-500 rounded-l-lg hover:bg-[#347C00] hover:text-white`}
             >
               All Products
             </button>
@@ -91,7 +126,7 @@ const Products = () => {
               onClick={() => {
                 setCategoryFilter("vegetables");
               }}
-              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-[#347C00] hover:text-white `}
+              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-500 hover:bg-[#347C00] hover:text-white `}
             >
               Vegetables
             </button>
@@ -99,7 +134,7 @@ const Products = () => {
               onClick={() => {
                 setCategoryFilter("fruits");
               }}
-              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-[#347C00] hover:text-white `}
+              className={`w-36 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-500 rounded-r-md hover:bg-[#347C00] hover:text-white `}
             >
               Fruits
             </button>
@@ -126,24 +161,25 @@ const Products = () => {
         ) : (
           <div className="w-2xl p-8 grid grid-cols-5 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {currentCards.map((product, index) => (
-                <Card
-                  key={index}
-                  id={product?.id}
-                  title={product?.title}
-                  category={product?.category}
-                  image={product?.image}
-                  price={product?.price}
-                  showCartButton={true}
-                  onClick={() => {
-                    navigate(`/details/${product?.id}`, {
-                      state: {product},
-                    })
-                  }}
-                />
+              <Card
+                key={index}
+                id={product?.id}
+                title={product?.title}
+                category={product?.category}
+                image={product?.image}
+                price={product?.price}
+                showCartButton={true}
+                handleNavigateDetails={() => {
+                  navigate(`/details/${product?.id}`, {
+                    state: { product },
+                  });
+                }}
+                handleAddtoCart={() => handleAddToCart(product)}
+              />
             ))}
           </div>
         )}
-      <div className="flex justify-between items-center px-8 pb-8">
+        <div className="flex justify-between items-center px-8 pb-8">
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}

@@ -1,12 +1,15 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useDarkMode } from "../components/Darkmode";
 
 import logoImg from "../assets/logo.svg";
+import ToggleButton from "./ToggleDarkMode";
 import dashboardIcon from "../assets/dashboard-icon.svg";
 import productsIcon from "../assets/add-products-icon.svg";
 import logoutIcon from "../assets/logout.svg"
 
 const Sidebar = () => {
+  const { darkMode } = useDarkMode();
   const navigate = useNavigate();
   const dataSidebar = [
     {
@@ -24,14 +27,15 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="bg-[#111215] text-white px-8 py-10 w-[380px] h-screen flex flex-col justify-between sticky top-0 shadow-md">
+    <div className={`bg-${darkMode ? "black" : "gray-200"} text-${darkMode ? "white" : "black"} text-white px-8 py-10 w-[380px] h-screen flex flex-col justify-between sticky top-0 shadow-md`}>
       <div className="flex flex-col gap-4
       ">
         <div className="flex gap-x-2">
             <img src={logoImg} alt="" />
-          <h1 className="text-3xl flex items-center font-bold text-center">
+          <h1 className={`text-${darkMode ? "white" : "black"} text-3xl flex items-center font-bold text-center`}>
             Fresh<span>Market</span>
           </h1>
+          <ToggleButton/>
         </div>
         <div className="flex flex-col gap-4">
           {dataSidebar.map(({ icon_url, name, navigate_url }) => (
@@ -45,7 +49,7 @@ const Sidebar = () => {
                   } flex gap-5 p-5 rounded-[10px] hover:bg-[#347C00]`}
                 >
                   <img src={icon_url} alt="" />
-                  <p className="font-medium">{name}</p>
+                  <p className={`text-${darkMode ? "white" : "black"}`}>{name}</p>
                 </div>
               )}
             </NavLink>
@@ -56,7 +60,7 @@ const Sidebar = () => {
       onClick={() => navigate("/sign-in")}
       className="flex gap-3 p-5 rounded-[10px] hover:bg-[#347c00]">
         <img src={logoutIcon} alt="" />
-        <p>Logout</p>
+        <p className={`text-${darkMode ? "white" :"black"}`}>Logout</p>
       </button>
     </div>
   );

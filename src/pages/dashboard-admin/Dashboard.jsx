@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDarkMode } from "../../components/Darkmode";
 import axios from "axios";
 
 import Sidebar from "../../components/Sidebar";
@@ -8,12 +9,19 @@ import Card from "../../components/Card";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("all"); 
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 8;
+
+  const pageStyle = {
+    backgroundColor: darkMode ? "#000000" : "#ffffff",
+    color: darkMode ? "#ffffff" : "black",
+    minHeight: "100vh",
+  };
 
   const fetchData = async () => {
     try {
@@ -35,7 +43,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, [categoryFilter]); 
+  }, [categoryFilter]);
 
   const handleSearch = () => {
     const productsCopy = [...products];
@@ -68,10 +76,21 @@ const Dashboard = () => {
     }
   };
 
+  const checkLoginStatus = () => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (!isLoggedIn) {
+      navigate("/sign-in");
+    }
+  };
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
   return (
     <div className="flex">
       <Sidebar />
-      <div className="bg-black text-white w-full p-4">
+      <div className=" text-white w-full p-4" style={pageStyle}>
         <h1 className="font-bold pt-8 text-2xl">Dashboard</h1>
         <div className="flex justify-between">
           <div className="inline-flex rounded-md shadow-sm mt-10" role="group">
