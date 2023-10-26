@@ -4,10 +4,27 @@ import { useDarkMode } from "../components/Darkmode";
 import LogoMarket from "../assets/logo.svg";
 import cartIcon from "../assets/cart-white.svg";
 import ToggleButton from "./ToggleDarkMode";
+import Swal from "sweetalert2";
 
 const Navbar = ({ showNavbarOption }) => {
   const navigate = useNavigate();
   const { darkMode } = useDarkMode();
+
+  const handleLogout = () => {
+    Swal.fire({
+      text: "Are you sure you want to log out?",
+      title: "Logout",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("user");
+        navigate("/sign-in");
+      }
+    });
+  };
 
   const navbarStyle = {
     backgroundColor: darkMode ? "#000000" : "#ffffff",
@@ -31,7 +48,7 @@ const Navbar = ({ showNavbarOption }) => {
 
   return (
     <div
-      className=" p-4 fixed left-0 right-0 text-white flex justify-between"
+      className="p-4 fixed left-0 right-0 text-white flex justify-between z-50"
       style={navbarStyle}
     >
       <Link to={"/"}>
@@ -66,30 +83,47 @@ const Navbar = ({ showNavbarOption }) => {
       )}
       <div className="flex items-center gap-x-10">
         <div className="flex gap-x-4">
-          <img
-            src={cartIcon}
-            alt=""
-            width={30}
-            style={{ ...cartIconStyle, fill: darkMode ? "white" : "black" }}
-          />
+          <button
+            onClick={() => {
+              navigate("/cart");
+            }}
+          >
+            <img
+              src={cartIcon}
+              alt=""
+              width={30}
+              style={{ ...cartIconStyle, fill: darkMode ? "white" : "black" }}
+            />
+          </button>
           <ToggleButton />
         </div>
-        <div className="flex items-center gap-x-4">
-          <button
-           onClick={() => {
-            navigate("/sign-in")
-           }}
-           className="hover:text-[#62CD14]" >Sign In</button>
+        {localStorage.getItem("isLoggedIn") ? (
+          <div>
+            <button onClick={handleLogout} className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]">
+              Log out
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-x-4">
             <button
-                onClick={() => {
-                  navigate("/sign-up")
-                 }}
+              onClick={() => {
+                navigate("/sign-in");
+              }}
+              className="hover:text-[#62CD14]"
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => {
+                navigate("/sign-up");
+              }}
               className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]"
               style={signUpStyle}
             >
               Sign Up
             </button>
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

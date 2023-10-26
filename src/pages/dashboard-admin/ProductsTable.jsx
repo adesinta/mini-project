@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDarkMode } from "../../components/Darkmode";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -11,6 +13,8 @@ import CreateProductModal from "../../components/CreateProductModal";
 import EditProductModal from "../../components/EditProductModal";
 
 const ProductsTable = () => {
+  const navigate  = useNavigate()
+  const { darkMode } = useDarkMode();
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,6 +23,10 @@ const ProductsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
 
   const fetchData = async () => {
     try {
@@ -33,14 +41,6 @@ const ProductsTable = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => {
     if (
@@ -60,8 +60,8 @@ const ProductsTable = () => {
   };
 
   const editModal = (product) => {
-    setShowEditModal(true)
-  }
+    setShowEditModal(true);
+  };
 
   const closeEditModal = () => {
     setShowEditModal(false);
@@ -69,7 +69,7 @@ const ProductsTable = () => {
 
   const handleEditProduct = (product) => {
     setSelectedProduct(product);
-    editModal()
+    editModal();
   };
 
   const handleDeleteProduct = async (productId) => {
@@ -127,15 +127,29 @@ const ProductsTable = () => {
   };
 
   useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (!isLoggedIn) {
+      navigate("/sign-in"); 
+    } else {
+      fetchData(); 
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     if (searchQuery === "") {
       fetchData();
     }
   }, [searchQuery]);
 
   return (
-    <div className="flex">
+    <div className={`flex ${darkMode ? 'black' : ''}`}>
       <Sidebar />
-      <div className="bg-black text-white w-full p-4">
+      <div className={`bg-${darkMode ? 'black' : 'white'} text-${darkMode ? 'white' : 'black'} w-full p-4`}>
         <h1 className="font-bold text-2xl pt-8">Products</h1>
         <div className="flex justify-between">
           <div className="flex gap-x-2">
@@ -168,9 +182,9 @@ const ProductsTable = () => {
           </div>
         ) : (
           <div>
-            <table className="w-full mt-10 text-sm text-left text-[#251C1C] dark:text-gray-400">
+            <table className="w-full mt-10 text-sm rounded border-black border-2 text-left text-[#251C1C] dark:text-gray-400">
               <thead className="text-base bg-[#171A1F] text-white dark:bg-gray-700 dark:text-gray-400">
-                <tr>
+                <tr className={`text-${darkMode ? "white" : "black"} bg-${darkMode ? "bg-[#171A1F]" : "gray-300"}`}>
                   <th className="px-5 py-3">No</th>
                   <th className="px-5 py-3">Product Name</th>
                   <th className="px-20 py-3">Category</th>
@@ -180,13 +194,13 @@ const ProductsTable = () => {
                   <th className="px-5 py-3">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="border-gray-950 border">
                 {currentItems.map((product, index) => (
                   <tr
                     key={index}
                     className={`${
-                      index % 2 === 1 ? "bg-[#171A1F]" : " dark:bg-[#171A1F]"
-                    }  text-white`}
+                      index % 2 === 1 ? "bg-[#171A1F]" : ""
+                    } bg-${darkMode ? "" : "white"} text-${darkMode ? "white" : "black"} border border-slate-950`}
                   >
                     <td className="px-6 py-4">
                       {index + 1 + indexOfFirstItem}

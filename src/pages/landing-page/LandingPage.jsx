@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect} from "react";
 import { useDarkMode } from "../../components/Darkmode";
 
 import welcomeImage from "../../assets/welcome-image.svg";
@@ -26,6 +25,10 @@ const LandingPage = () => {
     color: darkMode ? "#ffffff" : "#ffffff",
   }
 
+  useEffect(() => {
+    document.title = "Landing Page";
+  }, []);
+
   return (
     <div style={pageStyle}>
       <div className="">
@@ -41,11 +44,6 @@ const LandingPage = () => {
             Temukan Kesehatan dalam Setiap Gigitan! Pilih Sayuran dan
             Buah-buahan Berkualitas Tinggi Hanya di Sini.
           </p>
-          <Link to={"/sign-up"}>
-            <button className="bg-[#347C00] hover:bg-[#2B6700] w-40 h-10 rounded mt-6" style={buttonStyle}>
-              Sign Up Now
-            </button>
-          </Link>
           <img src={welcomeImage} alt="" className="mt-8 rounded-lg" />
         </div>
         <div
@@ -70,7 +68,7 @@ const LandingPage = () => {
         <ChatBox />
         <ContactUs />
         <div className="bg-[#2B6700] p-4" style={footerStyle}>
-          <p> &copy; Copyright FreshMarket. All Right reserved.</p>
+          <p className="text-center"> &copy; Copyright FreshMarket. All Right reserved. Develop by Ade Sinta.</p>
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../features/CartSlice";
 import { useDarkMode } from "../../components/Darkmode";
 import axios from "axios";
 
@@ -10,14 +12,23 @@ import Card from "../../components/Card";
 import Search from "../../components/Search";
 
 const Products = () => {
-  const { darkMode } = useDarkMode();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
+
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
   const cardsPerPage = 10;
+  const totalCards = products.length;
+  const lastCardIndex = currentPage * cardsPerPage;
+  const firstCardIndex = lastCardIndex - cardsPerPage;
+  const currentCards = products.slice(firstCardIndex, lastCardIndex);
 
   const pageStyle = {
     backgroundColor: darkMode ? "#000000" : "#ffffff",
@@ -43,10 +54,6 @@ const Products = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [categoryFilter]);
-
   const handleSearch = () => {
     const productsCopy = [...products];
 
@@ -61,16 +68,24 @@ const Products = () => {
     setProducts(filteredProducts);
   };
 
-  useEffect(() => {
-    if (searchQuery === "") {
-      fetchData();
+  const handleAddToCart = (product) => {
+    if (!isLoggedIn) {
+      console.log("Please log in to add items to the cart.");
+      return;
     }
-  }, [searchQuery]);
 
-  const totalCards = products.length;
-  const lastCardIndex = currentPage * cardsPerPage;
-  const firstCardIndex = lastCardIndex - cardsPerPage;
-  const currentCards = products.slice(firstCardIndex, lastCardIndex);
+    const newItem = {
+      id: product?.id,
+      title: product?.title,
+      image: product?.image,
+      category: product?.category,
+      description: product?.description,
+      price: product?.price,
+    };
+
+    dispatch(addItem(newItem));
+    navigate("/cart");
+  };
 
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= Math.ceil(totalCards / cardsPerPage)) {
@@ -78,11 +93,23 @@ const Products = () => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [categoryFilter]);
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      fetchData();
+    }
+  }, [searchQuery]);
+
+  useEffect(() => {
+    document.title = "Products Page";
+  }, []);
+
   return (
     <div className="w-full h-screen">
-      <Navbar 
-      showCartButton={false}
-      />
+      <Navbar showCartButton={false} />
       <div style={pageStyle}>
         <img src={productsHeader} alt="" className="w-full" />
         <div className="flex justify-between px-8">
@@ -134,24 +161,25 @@ const Products = () => {
         ) : (
           <div className="w-2xl p-8 grid grid-cols-5 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {currentCards.map((product, index) => (
-                <Card
-                  key={index}
-                  id={product?.id}
-                  title={product?.title}
-                  category={product?.category}
-                  image={product?.image}
-                  price={product?.price}
-                  showCartButton={true}
-                  onClick={() => {
-                    navigate(`/details/${product?.id}`, {
-                      state: {product},
-                    })
-                  }}
-                />
+              <Card
+                key={index}
+                id={product?.id}
+                title={product?.title}
+                category={product?.category}
+                image={product?.image}
+                price={product?.price}
+                showCartButton={true}
+                handleNavigateDetails={() => {
+                  navigate(`/details/${product?.id}`, {
+                    state: { product },
+                  });
+                }}
+                handleAddtoCart={() => handleAddToCart(product)}
+              />
             ))}
           </div>
         )}
-      <div className="flex justify-between items-center px-8 pb-8">
+        <div className="flex justify-between items-center px-8 pb-8">
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}

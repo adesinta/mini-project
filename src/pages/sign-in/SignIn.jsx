@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDarkMode } from "../../components/Darkmode";
 import Swal from "sweetalert2";
 
+import ToggleButton from "../../components/ToggleDarkMode";
 import logoImg from "../../assets/logo.svg";
 import marketImg from "../../assets/market-img.svg";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -68,7 +71,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="bg-black text-white w-full h-screen overflow-hidden">
+    <div className={`bg-${darkMode ? 'black' : 'white'} text-${darkMode ? 'white' : 'black'} w-full h-screen overflow-hidden`}>
       <div className="flex justify-between">
         <div className="">
           <div className="w-[790px] flex justify-between p-4">
@@ -80,22 +83,27 @@ const SignIn = () => {
                 className="flex gap-x-2 cursor-default"
               >
                 <img src={logoImg} alt="" />
-                <h1 className="text-white text-2xl font-bold flex items-center">
+                <h1 className={`bg-${darkMode ? 'black' : 'white'} text-${darkMode ? 'white' : 'black'} text-2xl font-bold flex items-center`}>
                   Fresh<span className="text-[#62CD14]">Market</span>
                 </h1>
               </div>
             </div>
             <div>
-              <div className="flex pt-4 gap-x-2">
-                <p>Don't have an account?</p>
-                <button
-                  onClick={() => {
-                    navigate("/sign-up");
-                  }}
-                  className="text-[#62CD14]"
-                >
-                  Sign Up
-                </button>
+              <div className="flex p-4 gap-x-4">
+                <div>
+                  <p>Don't have an account?</p>
+                </div>
+                <div>
+                  <button
+                    onClick={() => {
+                      navigate("/sign-up");
+                    }}
+                    className="text-[#62CD14]"
+                  >
+                    Sign Up
+                  </button>
+                </div>
+                <ToggleButton />
               </div>
             </div>
           </div>
@@ -120,13 +128,13 @@ const SignIn = () => {
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="enter at least 8+ characters"
+                      placeholder="enter your password"
                       className="text-black rounded w-[400px]"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-[#347C00] hover:bg-[#2B6700] h-10 rounded"
+                    className={`text-${darkMode ? 'white' : 'white'} w-full bg-[#347C00] hover:bg-[#2B6700] h-10 rounded`}
                   >
                     Sign In
                   </button>
