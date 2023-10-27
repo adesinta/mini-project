@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../../features/CartSlice";
 import { useDarkMode } from "../../components/Darkmode";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 import productsHeader from "../../assets/products-header.svg";
 
@@ -24,7 +25,7 @@ const Products = () => {
 
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-  const cardsPerPage = 10;
+  const cardsPerPage = 5;
   const totalCards = products.length;
   const lastCardIndex = currentPage * cardsPerPage;
   const firstCardIndex = lastCardIndex - cardsPerPage;
@@ -70,7 +71,21 @@ const Products = () => {
 
   const handleAddToCart = (product) => {
     if (!isLoggedIn) {
-      console.log("Please log in to add items to the cart.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Sorry, you need to Sign-in to add items to the cart.",
+        showCancelButton: true,
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#347C00",
+        confirmButtonText: "Sign In",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/sign-in");
+        }
+      });
       return;
     }
 

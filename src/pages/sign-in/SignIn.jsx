@@ -10,13 +10,13 @@ import marketImg from "../../assets/market-img.svg";
 const SignIn = () => {
   const navigate = useNavigate();
   const { darkMode } = useDarkMode();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    if (!email || !password) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -25,53 +25,58 @@ const SignIn = () => {
       return;
     }
 
-    const dummyUser = { username: "admin@gmail.com", password: "admin123" };
+    const adminCredentials = { email: "admin@gmail.com", password: "admin123" };
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
-    if (
-      (storedUser &&
-        storedUser.username === username &&
-        storedUser.password === password) ||
-      (dummyUser.username === username && dummyUser.password === password)
-    ) {
+    if (email === adminCredentials.email && password === adminCredentials.password) {
       localStorage.setItem("isLoggedIn", true);
 
       const user = {
-        username: username,
+        email,
       };
       localStorage.setItem("user", JSON.stringify(user));
 
       Swal.fire({
         icon: "success",
-        title: "Successfully Login!",
+        title: "Admin Successfully Logged In!",
         confirmButtonText: "OK",
       }).then((res) => {
         if (res.isConfirmed) {
           navigate("/dashboard-admin");
         }
       });
-    } else {
+    } else if (storedUser && storedUser.email === email && storedUser.password === password) {
       localStorage.setItem("isLoggedIn", true);
 
       const user = {
-        username: username,
+        email,
       };
       localStorage.setItem("user", JSON.stringify(user));
 
       Swal.fire({
         icon: "success",
-        title: "Successfully Login!",
+        title: "Successfully Logged In!",
         confirmButtonText: "OK",
       }).then((res) => {
         if (res.isConfirmed) {
           navigate("/");
         }
       });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Email and password are not available. Please, sign-up first.",
+      });
     }
   };
 
   return (
-    <div className={`bg-${darkMode ? 'black' : 'white'} text-${darkMode ? 'white' : 'black'} w-full h-screen overflow-hidden`}>
+    <div
+      className={`bg-${darkMode ? "black" : "white"} text-${
+        darkMode ? "white" : "black"
+      } w-full h-screen overflow-hidden`}
+    >
       <div className="flex justify-between">
         <div className="">
           <div className="w-[790px] flex justify-between p-4">
@@ -83,7 +88,11 @@ const SignIn = () => {
                 className="flex gap-x-2 cursor-default"
               >
                 <img src={logoImg} alt="" />
-                <h1 className={`bg-${darkMode ? 'black' : 'white'} text-${darkMode ? 'white' : 'black'} text-2xl font-bold flex items-center`}>
+                <h1
+                  className={`bg-${darkMode ? "black" : "white"} text-${
+                    darkMode ? "white" : "black"
+                  } text-2xl font-bold flex items-center`}
+                >
                   Fresh<span className="text-[#62CD14]">Market</span>
                 </h1>
               </div>
@@ -116,8 +125,8 @@ const SignIn = () => {
                     <label htmlFor="email">Email</label>
                     <input
                       type="email"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="example@gmail.com"
                       className="text-black rounded w-[400px]"
                     />
@@ -134,7 +143,9 @@ const SignIn = () => {
                   </div>
                   <button
                     type="submit"
-                    className={`text-${darkMode ? 'white' : 'white'} w-full bg-[#347C00] hover:bg-[#2B6700] h-10 rounded`}
+                    className={`text-${
+                      darkMode ? "white" : "white"
+                    } w-full bg-[#347C00] hover:bg-[#2B6700] h-10 rounded`}
                   >
                     Sign In
                   </button>

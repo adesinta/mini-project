@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDarkMode } from "../components/Darkmode";
+import Swal from "sweetalert2";
 
 import logoImg from "../assets/logo.svg";
 import ToggleButton from "./ToggleDarkMode";
@@ -25,6 +26,25 @@ const Sidebar = () => {
       navigate_url: "/products-table",
     },
   ];
+
+  const handleLogout = () => {
+    Swal.fire({
+      icon: "question",
+      title: "Are you sure?",
+      text: "Do you want to log out?",
+      showCancelButton: true,
+      confirmButtonColor: "#347C00",
+      confirmButtonText: "Yes",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("isLoggedIn");
+        navigate("/sign-in");
+      }
+    });
+  };
+
 
   return (
     <div className={`bg-${darkMode ? "black" : "gray-200"} text-${darkMode ? "white" : "black"} text-white px-8 py-10 w-[380px] h-screen flex flex-col justify-between sticky top-0 shadow-md`}>
@@ -57,7 +77,7 @@ const Sidebar = () => {
         </div>
       </div>
       <button
-      onClick={() => navigate("/sign-in")}
+      onClick={handleLogout}
       className="flex gap-3 p-5 rounded-[10px] hover:bg-[#347c00]">
         <img src={logoutIcon} alt="" />
         <p className={`text-${darkMode ? "white" :"black"}`}>Logout</p>
