@@ -184,7 +184,7 @@ const ProductsTable = () => {
           <div>
             <table className="w-full mt-10 text-sm rounded border-black border-2 text-left text-[#251C1C] dark:text-gray-400">
               <thead className="text-base bg-[#171A1F] text-white dark:bg-gray-700 dark:text-gray-400">
-                <tr className={`text-${darkMode ? "white" : "black"} bg-${darkMode ? "bg-[#171A1F]" : "gray-300"}`}>
+                <tr className={`text-${darkMode ? "white" : "white"} bg-${darkMode ? "bg-[#171A1F]" : "gray-300"}`}>
                   <th className="px-5 py-3">No</th>
                   <th className="px-5 py-3">Product Name</th>
                   <th className="px-20 py-3">Category</th>
