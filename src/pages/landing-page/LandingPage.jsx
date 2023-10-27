@@ -41,8 +41,7 @@ const LandingPage = () => {
             Welcome to <span className="text-[#62CD14]">Fresh Market</span>
           </h1>
           <p>
-            Temukan Kesehatan dalam Setiap Gigitan! Pilih Sayuran dan
-            Buah-buahan Berkualitas Tinggi Hanya di Sini.
+          Find Health in Every Bite! Choose High Quality Vegetables and Fruits Only Here.
           </p>
           <img src={welcomeImage} alt="" className="mt-8 rounded-lg" />
         </div>
