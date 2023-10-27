@@ -81,7 +81,7 @@ const Dashboard = () => {
     if (!isLoggedIn) {
       navigate("/sign-in");
     }
-  };
+  }
 
   useEffect(() => {
     checkLoginStatus();

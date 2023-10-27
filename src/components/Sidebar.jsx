@@ -45,7 +45,6 @@ const Sidebar = () => {
     });
   };
 
-
   return (
     <div className={`bg-${darkMode ? "black" : "gray-200"} text-${darkMode ? "white" : "black"} text-white px-8 py-10 w-[380px] h-screen flex flex-col justify-between sticky top-0 shadow-md`}>
       <div className="flex flex-col gap-4
