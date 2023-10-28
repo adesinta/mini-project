@@ -81,7 +81,7 @@ const Cart = () => {
     <div
       className={
         darkMode
-          ? "bg-black text-white overflow-hidden"
+          ? "bg-black text-white h-screen overflow-hidden"
           : "bg-white text-black overflow-hidden"
       }
     >
