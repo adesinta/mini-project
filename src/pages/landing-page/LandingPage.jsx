@@ -32,7 +32,7 @@ const LandingPage = () => {
   return (
     <div style={pageStyle}>
       <div className="">
-        <Navbar showNavbarOption={true} />
+        <Navbar showNavbarOption={true} showHomeButton={false} />
         <div
           id="home"
           className="p-10 flex flex-col text-center gap-y-2 items-center"
