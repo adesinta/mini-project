@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDarkMode } from "../../components/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 import Swal from "sweetalert2";
 
 import ToggleButton from "../../components/ToggleDarkMode";

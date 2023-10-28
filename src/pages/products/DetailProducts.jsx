@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDarkMode } from "../../components/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 
 import backIcon from "../../assets/back.svg";
-// import cartIcon from "../../assets/cart.svg";
 import Navbar from "../../components/Navbar";
 
 const DetailProducts = () => {

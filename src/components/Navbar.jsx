@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDarkMode } from "../components/Darkmode";
+import { useDarkMode } from "../features/Darkmode";
 import LogoMarket from "../assets/logo.svg";
 import cartIcon from "../assets/cart-white.svg";
 import ToggleButton from "./ToggleDarkMode";

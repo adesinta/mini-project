@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { DarkModeProvider } from "./components/Darkmode";
+import { DarkModeProvider } from "./features/Darkmode";
 
 import LandingPage from "./pages/landing-page/LandingPage";
 import SignIn from "./pages/sign-in/SignIn";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useDarkMode } from "../../components/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 import { removeItem } from "../../features/CartSlice";
 import backIcon from "../../assets/back.svg";
 import Navbar from "../../components/Navbar";

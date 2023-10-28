@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDarkMode } from "../../components/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 import axios from "axios";
 import Swal from "sweetalert2";
 
