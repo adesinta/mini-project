@@ -6,7 +6,7 @@ import cartIcon from "../assets/cart-white.svg";
 import ToggleButton from "./ToggleDarkMode";
 import Swal from "sweetalert2";
 
-const Navbar = ({ showNavbarOption }) => {
+const Navbar = ({ showNavbarOption, showHomeButton }) => {
   const navigate = useNavigate();
   const { darkMode } = useDarkMode();
 
@@ -83,6 +83,13 @@ const Navbar = ({ showNavbarOption }) => {
       )}
       <div className="flex items-center gap-x-10">
         <div className="flex gap-x-4">
+          {showHomeButton && (
+            <button onClick={() => {
+              navigate("/")
+            }} className="hover:text-[#62CD14]">
+              Home
+            </button>
+          )}
           <button
             onClick={() => {
               navigate("/cart");
@@ -99,7 +106,10 @@ const Navbar = ({ showNavbarOption }) => {
         </div>
         {localStorage.getItem("isLoggedIn") ? (
           <div>
-            <button onClick={handleLogout} className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]">
+            <button
+              onClick={handleLogout}
+              className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]"
+            >
               Log out
             </button>
           </div>

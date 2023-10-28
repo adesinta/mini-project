@@ -6,6 +6,7 @@ import { useDarkMode } from "../../components/Darkmode";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import backIcon from "../../assets/back.svg"
 import productsHeader from "../../assets/products-header.svg";
 
 import Navbar from "../../components/Navbar";
@@ -124,7 +125,7 @@ const Products = () => {
 
   return (
     <div className="w-full h-screen">
-      <Navbar showCartButton={false} />
+      <Navbar showNavbarOption={false} showHomeButton={true}/>
       <div style={pageStyle}>
         <img src={productsHeader} alt="" className="w-full" />
         <div className="flex justify-between px-8">
