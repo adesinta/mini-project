@@ -64,21 +64,21 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
       </Link>
       {showNavbarOption && (
         <div className="flex items-center gap-x-6 cursor-pointer">
-          <a href="#home">
+          <Link to="#home">
             <p className="hover:text-[#62CD14]">Home</p>
-          </a>
+          </Link>
           <Link to={"/products"}>
             <p className="hover:text-[#62CD14]">Products</p>
           </Link>
-          <a href="#about-us">
+          <Link>
             <p className="hover:text-[#62CD14]">About Us</p>
-          </a>
-          <a href="#chatbox">
+          </Link>
+          <Link >
             <p className="hover:text-[#62CD14]">ChatBox</p>
-          </a>
-          <a href="#contact-us">
+          </Link>
+          <Link >
             <p className="hover:text-[#62CD14]">Contact</p>
-          </a>
+          </Link>
         </div>
       )}
       <div className="flex items-center gap-x-10">

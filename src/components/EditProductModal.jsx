@@ -4,7 +4,12 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import imageCompression from "browser-image-compression";
 
-const EditProductModal = ({ showEditModal, closeEditModal, fetchData, selectedProduct }) => {
+const EditProductModal = ({
+  showEditModal,
+  closeEditModal,
+  fetchData,
+  selectedProduct,
+}) => {
   const navigate = useNavigate();
   const [imageError, setImageError] = useState("");
   const [editedProduct, setEditedProduct] = useState({
@@ -14,18 +19,6 @@ const EditProductModal = ({ showEditModal, closeEditModal, fetchData, selectedPr
     description: "",
     price: "",
   });
-
-  useEffect(() => {
-    if (selectedProduct) {
-      setEditedProduct({
-        title: selectedProduct.title,
-        category: selectedProduct.category,
-        image: selectedProduct.image,
-        description: selectedProduct.description,
-        price: selectedProduct.price,
-      });
-    }
-  }, [selectedProduct]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,16 +77,30 @@ const EditProductModal = ({ showEditModal, closeEditModal, fetchData, selectedPr
             navigate("/products-table");
           }
         });
-      } 
+      }
     } catch (error) {
-        console.error("Error updating product:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: `Error updating product. Please try again. ${error.message || error}`,
-        });
+      console.error("Error updating product:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: `Error updating product. Please try again. ${
+          error.message || error
+        }`,
+      });
     }
   };
+  
+  useEffect(() => {
+    if (selectedProduct) {
+      setEditedProduct({
+        title: selectedProduct.title,
+        category: selectedProduct.category,
+        image: selectedProduct.image,
+        description: selectedProduct.description,
+        price: selectedProduct.price,
+      });
+    }
+  }, [selectedProduct]);
 
   return (
     showEditModal && (

@@ -6,7 +6,6 @@ import { useDarkMode } from "../../features/Darkmode";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import backIcon from "../../assets/back.svg"
 import productsHeader from "../../assets/products-header.svg";
 
 import Navbar from "../../components/Navbar";

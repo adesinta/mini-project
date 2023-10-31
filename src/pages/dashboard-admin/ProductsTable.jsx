@@ -59,7 +59,7 @@ const ProductsTable = () => {
     setShowModal(false);
   };
 
-  const editModal = (product) => {
+  const editModal = () => {
     setShowEditModal(true);
   };
 

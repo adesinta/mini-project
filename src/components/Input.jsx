@@ -18,6 +18,7 @@ const Input = ({ id, placeholder, value, onChange, darkMode }) => {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        autoComplete='off'
         style={inputStyle}
       />
     </div>

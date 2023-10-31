@@ -53,6 +53,7 @@ const ContactUs = () => {
                 type="text"
                 name="firstName"
                 value={formData.firstName}
+                autoComplete="off"
                 onChange={handleChange}
                 className="pl-2 py-[6px] text-black rounded-[4px]"
               />
@@ -63,6 +64,7 @@ const ContactUs = () => {
               type="email"
               name="email"
               value={formData.email}
+              autoComplete="off"
               onChange={handleChange}
               className="pl-2 py-[6px] text-black  rounded-[4px]"
             />
