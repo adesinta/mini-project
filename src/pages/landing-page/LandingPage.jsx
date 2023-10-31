@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { useDarkMode } from "../../components/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 
 import welcomeImage from "../../assets/welcome-image.svg";
 import AboutImage from "../../assets/about-image.svg";

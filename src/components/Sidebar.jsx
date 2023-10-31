@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDarkMode } from "../components/Darkmode";
+import { useDarkMode } from "../features/Darkmode";
 import Swal from "sweetalert2";
 
 import logoImg from "../assets/logo.svg";
