@@ -24,7 +24,7 @@ const DetailProducts = () => {
     <div>
       <Navbar />
       <div
-        className={`bg-${darkMode ? "black" : "white"} h-screen w-full text-${
+        className={`bg-${darkMode ? "black" : "white"} h-screen w-full overflow-auto text-${
           darkMode ? "white" : "black"
         }`}
       >
