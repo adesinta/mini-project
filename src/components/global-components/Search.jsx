@@ -33,7 +33,7 @@ const Search = ({ onChange, value }) => {
             value={value}
             type="text"
             id="default-search"
-            className="block mt-10 w-[450px] p-4 pl-12 text-sm text-gray-900 rounded-lg bg-white outline-none"
+            className="block mt-10 md:w-[450px] p-4 pl-12 text-sm text-gray-900 rounded-lg bg-white outline-none"
             placeholder="Search"
             required
           />

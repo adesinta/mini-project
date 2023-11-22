@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../features/Darkmode";
 
@@ -28,13 +28,13 @@ const DetailProducts = () => {
           darkMode ? "white" : "black"
         }`}
       >
-        <div className="flex h-screen justify-evenly items-center">
+        <div className="flex flex-col md:flex-row md:h-screen md:justify-evenly md:items-center">
           <div className="flex items-center">
             {product?.image && (
               <img
                 src={product?.image}
                 alt={product?.title}
-                className="w-[500px] rounded-3xl"
+                className="w-[500px] md:rounded-3xl"
               />
             )}
           </div>
@@ -43,7 +43,7 @@ const DetailProducts = () => {
               onClick={() => {
                 navigate("/products");
               }}
-              className={`bg-[#62CD14] hover:bg-[#469310] flex gap-2 justify-center items-center w-20 h-10 rounded`}
+              className={`bg-[#62CD14] hover:bg-[#469310] md:flex gap-2 justify-center items-center w-20 h-10 rounded hidden`}
             >
               <img
                 src={backIcon}
@@ -51,10 +51,12 @@ const DetailProducts = () => {
                 width={10}
                 style={{ fill: darkMode ? "#FFF" : "#000" }}
               />
-              <p className={`text-${darkMode ? "black" : "black"} text-lg`}>Back</p>
+              <p className={`text-${darkMode ? "black" : "black"} text-lg`}>
+                Back
+              </p>
             </button>
             <div className="flex flex-col gap-y-10 pt-10">
-              <div className="flex justify-between items-center w-[500px]">
+              <div className="flex justify-between items-center w-full px-2 md:w-[500px]">
                 <p className="font-bold text-4xl text-[#62CD14]">
                   {product?.title}
                 </p>
@@ -65,21 +67,17 @@ const DetailProducts = () => {
                 </div>
               </div>
               <div>
-                <p className="w-[500px]  text-justify">
+                <p className="w-full md:w-[500px]  text-justify px-2">
                   {product?.description}
                 </p>
               </div>
-              <div className="flex flex-col gap-y-8">
-                <div className="flex justify-between">
-                  <p
-                    className={`text-${
-                      darkMode ? "yellow-300" : "orange-600"
-                    } text-2xl font-semibold pt-2`}
-                  >
-                    Rp. {product?.price}
-                  </p>
-                </div>
-              </div>
+              <p
+                className={`text-${
+                  darkMode ? "yellow-300" : "orange-600"
+                } text-2xl font-semibold pt-2 px-2`}
+              >
+                Rp. {product?.price}
+              </p>
             </div>
           </div>
         </div>

@@ -103,7 +103,7 @@ const Cart = () => {
   return (
     <div className={`bg-${darkMode ? "black" : "white"} text-${darkMode ? "white" : "black"} h-screen overflow-auto`}>
       <Navbar />
-      <div className="absolute pt-24 pl-5">
+      <div className="flex pt-24 pl-5">
         <button
           onClick={() => {
             navigate("/products");
@@ -119,7 +119,7 @@ const Cart = () => {
           <p className={`text-lg`}>Back</p>
         </button>
       </div>
-      <div className="w-full pt-24">
+      <div className="w-full pt-10">
         <section className="w-full m-auto flex flex-wrap justify-center ">
           {items.length !== 0 ? (
             items.map((item, index) => (
