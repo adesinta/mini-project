@@ -6,18 +6,12 @@ import Swal from "sweetalert2";
 import ToggleButton from "../../components//global-components/ToggleDarkMode";
 import logoImg from "../../assets/logo.svg";
 import marketImg from "../../assets/market-img.svg";
-import HumbergerIcon from "../../assets/humberger-icon.svg";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const { darkMode } = useDarkMode();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
-  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -84,10 +78,6 @@ const SignIn = () => {
     }
   };
 
-  const cartIconStyle = {
-    filter: darkMode ? "invert(1)" : "invert(0)",
-  };
-
   return (
     <div
       className={`bg-${darkMode ? "black" : "white"} text-${
@@ -96,7 +86,7 @@ const SignIn = () => {
     >
       <div className="flex justify-between">
         <div className="">
-          <div className="md:w-[790px] hidden md:flex md:justify-between md:p-4">
+          <div className="w-full md:w-[790px] flex flex-col justify-center items-center md:flex-row md:justify-between p-4">
             <div>
               <div
                 onClick={() => {
@@ -104,7 +94,7 @@ const SignIn = () => {
                 }}
                 className="flex gap-x-2 cursor-default"
               >
-                <img src={logoImg} alt="" />
+                <img src={logoImg} alt="" className="w-13 md:w-14" />
                 <h1
                   className={`bg-${darkMode ? "black" : "white"} text-${
                     darkMode ? "white" : "black"
@@ -115,16 +105,16 @@ const SignIn = () => {
               </div>
             </div>
             <div>
-              <div className="flex p-4 gap-x-4">
+              <div className="flex p-4 gap-x-4 text-center items-center">
                 <div>
-                  <p>Don't have an account?</p>
+                  <p className="text-sm">Don't have an account?</p>
                 </div>
                 <div>
                   <button
                     onClick={() => {
                       navigate("/sign-up");
                     }}
-                    className="text-[#62CD14]"
+                    className="text-[#62CD14] text-sm"
                   >
                     Sign Up
                   </button>
@@ -133,26 +123,9 @@ const SignIn = () => {
               </div>
             </div>
           </div>
-          <div className="sm:hidden">
-            <button onClick={toggleMobileMenu} className="outline-none">
-              <img
-                src={HumbergerIcon}
-                alt=""
-                width={40}
-                className={`${isMobileMenuOpen} `}
-                style={{ ...cartIconStyle, fill: darkMode ? "white" : "white" }}
-              />
-            </button>
-          </div>
 
-          {isMobileMenuOpen && (
-            <div className="sm:hidden absolute top-16 left-0 right-0 bg-white">
-
-              hahaha
-            </div>
-          )}
-          <div className="flex items-center justify-center h-[600px]">
-            <div className="flex flex-col items-center gap-y-8">
+          <div className="flex items-center h-[400px] md:h-[800px] justify-center px-8 w-full ">
+            <div className="flex flex-col items-center gap-y-8" >
               <p className="font-bold text-4xl text-[#62CD14]">Sign In</p>
               <form onSubmit={handleLogin}>
                 <div className="flex flex-col gap-y-4">
@@ -163,7 +136,7 @@ const SignIn = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="example@gmail.com"
-                      className="text-black rounded w-[400px]"
+                      className="text-black rounded w-80 md:w-[400px]"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -173,7 +146,7 @@ const SignIn = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="enter your password"
-                      className="text-black rounded w-[400px]"
+                      className="text-black rounded w-80 md:w-[400px]"
                     />
                   </div>
                   <button
