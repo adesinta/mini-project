@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../features/Darkmode";
 import Swal from "sweetalert2";
 
-import ToggleButton from "../../components/global-components/ToggleDarkMode";
+import ToggleButton from "../../components//global-components/ToggleDarkMode";
 import logoImg from "../../assets/logo.svg";
 import marketImg from "../../assets/market-img.svg";
 
@@ -28,7 +28,10 @@ const SignIn = () => {
     const adminCredentials = { email: "admin@gmail.com", password: "admin123" };
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
-    if (email === adminCredentials.email && password === adminCredentials.password) {
+    if (
+      email === adminCredentials.email &&
+      password === adminCredentials.password
+    ) {
       localStorage.setItem("isLoggedIn", true);
 
       const user = {
@@ -45,7 +48,11 @@ const SignIn = () => {
           navigate("/dashboard-admin");
         }
       });
-    } else if (storedUser && storedUser.email === email && storedUser.password === password) {
+    } else if (
+      storedUser &&
+      storedUser.email === email &&
+      storedUser.password === password
+    ) {
       localStorage.setItem("isLoggedIn", true);
 
       const user = {
@@ -154,7 +161,9 @@ const SignIn = () => {
             </div>
           </div>
         </div>
-        <img src={marketImg} alt="" className="" />
+        <div className="hidden lg:block w-[80rem] h-screen">
+          <img src={marketImg} alt="" className="bg-cover w-full" />
+        </div>
       </div>
     </div>
   );
