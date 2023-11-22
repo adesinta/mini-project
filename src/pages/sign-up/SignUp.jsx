@@ -111,7 +111,9 @@ const SignUp = () => {
             </p>
           </div>
         </div>
-        <img src={marketImg} alt="" className="" />
+        <div className="hidden lg:block w-[80rem] h-screen">
+          <img src={marketImg} alt="" className="bg-cover w-full" />
+        </div>
       </div>
     </div>
   );
