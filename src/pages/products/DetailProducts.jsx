@@ -28,7 +28,7 @@ const DetailProducts = () => {
           darkMode ? "white" : "black"
         }`}
       >
-        <div className="flex flex-col md:flex-row md:h-screen md:justify-evenly md:items-center">
+        <div className="flex flex-col lg:flex-row md:h-screen md:justify-evenly md:items-center">
           <div className="flex items-center">
             {product?.image && (
               <img
