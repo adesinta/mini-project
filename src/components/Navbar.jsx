@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../features/Darkmode";
 import LogoMarket from "../assets/logo.svg";
 import cartIcon from "../assets/cart-white.svg";
@@ -9,6 +9,15 @@ import Swal from "sweetalert2";
 const Navbar = ({ showNavbarOption, showHomeButton }) => {
   const navigate = useNavigate();
   const { darkMode } = useDarkMode();
+  const [activeSection, setActiveSection] = useState(null);
+
+  const handleScrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      setActiveSection(sectionId);
+    }
+  };
 
   const handleLogout = () => {
     Swal.fire({
@@ -24,6 +33,10 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
         navigate("/sign-in");
       }
     });
+  };
+
+  const clearActiveSection = () => {
+    setActiveSection(null);
   };
 
   const navbarStyle = {
@@ -51,48 +64,85 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
       className="p-4 fixed left-0 right-0 text-white flex justify-between z-50"
       style={navbarStyle}
     >
-      <Link to={"/"}>
-        <div className="flex gap-x-2 cursor-default">
-          <img src={LogoMarket} alt="" />
-          <h1
-            className="text-white text-2xl font-bold flex items-center"
-            style={headerStyle}
-          >
-            Fresh<span className="text-[#62CD14]">Market</span>
-          </h1>
-        </div>
-      </Link>
+      <div
+        onClick={() => {
+          navigate("/");
+        }}
+        className="flex gap-x-2 cursor-default"
+      >
+        <img src={LogoMarket} alt="" />
+        <h1
+          className="text-white text-2xl font-bold flex items-center"
+          style={headerStyle}
+        >
+          Fresh<span className="text-[#62CD14]">Market</span>
+        </h1>
+      </div>
+
       {showNavbarOption && (
         <div className="flex items-center gap-x-6 cursor-pointer">
-          <Link to="#home">
-            <p className="hover:text-[#62CD14]">Home</p>
-          </Link>
-          <Link to={"/products"}>
-            <p className="hover:text-[#62CD14]">Products</p>
-          </Link>
-          <Link>
-            <p className="hover:text-[#62CD14]">About Us</p>
-          </Link>
-          <Link >
-            <p className="hover:text-[#62CD14]">ChatBox</p>
-          </Link>
-          <Link >
-            <p className="hover:text-[#62CD14]">Contact</p>
-          </Link>
+          <p
+            onClick={() => {
+              handleScrollToSection("Home");
+              clearActiveSection();
+            }}
+            className={activeSection === "home" ? "text-[#62CD14]" : "hover:text-[#347C00]"}
+          >
+            Home
+          </p>
+          <p
+            onClick={() => {
+              navigate("/products")
+            }}
+            className={activeSection === "products" ? "text-[#62CD14]" : "hover:text-[#347C00]"}
+          >
+            Products
+          </p>
+          <p
+            onClick={() => {
+              handleScrollToSection("aboutUs");
+              clearActiveSection();
+            }}
+            className={activeSection === "aboutUs" ? "text-[#62CD14]" : "hover:text-[#347C00]"}
+          >
+            About Us
+          </p>
+          <p
+            onClick={() => {
+              handleScrollToSection("chatbox");
+              clearActiveSection();
+            }}
+            className={activeSection === "chatBox" ? "text-[#62CD14]" : "hover:text-[#347C00]"}
+          >
+            ChatBox
+          </p>
+          <p
+            onClick={() => {
+              handleScrollToSection("contact-us");
+              clearActiveSection();
+            }}
+            className={activeSection === "contact" ? "text-[#62CD14]" : "hover:text-[#347C00]"}
+          >
+            Contact
+          </p>
         </div>
       )}
       <div className="flex items-center gap-x-10">
         <div className="flex gap-x-4">
           {showHomeButton && (
-            <button onClick={() => {
-              navigate("/")
-            }} className="hover:text-[#62CD14]">
+            <button
+              onClick={() => {
+                navigate("/")
+              }}
+              className="hover:text-[#347C00]"
+            >
               Home
             </button>
           )}
           <button
             onClick={() => {
               navigate("/cart");
+              clearActiveSection();
             }}
           >
             <img
@@ -107,7 +157,10 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
         {localStorage.getItem("isLoggedIn") ? (
           <div>
             <button
-              onClick={handleLogout}
+              onClick={() => {
+                handleLogout();
+                clearActiveSection();
+              }}
               className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]"
             >
               Log out
@@ -117,15 +170,17 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
           <div className="flex items-center gap-x-4">
             <button
               onClick={() => {
-                navigate("/sign-in");
+                handleScrollToSection("signIn");
+                clearActiveSection();
               }}
-              className="hover:text-[#62CD14]"
+              className={activeSection === "signIn" ? "text-[#62CD14]" : ""}
             >
               Sign In
             </button>
             <button
               onClick={() => {
-                navigate("/sign-up");
+                handleScrollToSection("signUp");
+                clearActiveSection();
               }}
               className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]"
               style={signUpStyle}

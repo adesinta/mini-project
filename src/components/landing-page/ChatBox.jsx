@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 
-import Input from "../../components/Input";
+import Input from "../Input";
 
 const ChatBox = () => {
   const configuration = new Configuration({
