@@ -36,17 +36,17 @@ const ContactUs = () => {
   };
 
   return (
-    <div id="contact-us" className="flex justify-around p-10 gap-x-4">
+    <div id="contact-us" className="py-28 md:flex lg:flex lg:justify-around md:justify-around md:p-10 md:gap-x-4">
       <div className="flex flex-col justify-center">
-        <h1 className="font-bold text-3xl pb-6">Contact Us</h1>
-        <p className="">
+        <h1 className="font-bold text-3xl pb-6 text-center md:text-start">Contact Us</h1>
+        <p className="flex justify-center pb-10 md:pb-0 md:text-start md:justify-start">
           Need to get in touch with us? Either fill out the <br /> form with
           your inquiry or find the department
           <br /> email you'd like to contact below.
         </p>
       </div>
-      <div className="">
-        <form onSubmit={handleSubmit} className="w-[30rem] flex flex-col gap-y-4">
+      <div className="flex justify-center md:flex ">
+        <form onSubmit={handleSubmit} className="w-[20rem] md:w-[30rem] md:flex md:flex-col md:gap-y-4">
             <div className="flex flex-col">
               <label htmlFor="firstName">Full Name</label>
               <input
@@ -81,7 +81,7 @@ const ContactUs = () => {
           </div>
           <button
             type="submit"
-            className="mt-4 text-white bg-[#347C00] hover:bg-[#2B6700] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="mt-4 text-white bg-[#347C00] hover:bg-[#2B6700] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[4px] text-sm w-full sm:w-auto px-5 py-2.5 text-center"
           >
             Submit
           </button>
