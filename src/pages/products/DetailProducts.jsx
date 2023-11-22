@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../features/Darkmode";
 
 import backIcon from "../../assets/back.svg";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/global-components/Navbar";
 
 const DetailProducts = () => {
   const location = useLocation();

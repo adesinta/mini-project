@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDarkMode } from "../../features/Darkmode";
 import { removeItem } from "../../features/CartSlice";
 import backIcon from "../../assets/back.svg";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/global-components/Navbar";
 import Swal from "sweetalert2";
 
 const Cart = () => {
@@ -77,21 +77,38 @@ const Cart = () => {
     }
   };
 
-  return (
-    <div
-      className={
-        darkMode
-          ? "bg-black text-white h-screen overflow-hidden"
-          : "bg-white text-black overflow-hidden"
+  const handleDelete = (index) => {
+    Swal.fire({
+      title: "Delete Product",
+      text: "Are you sure you want to delete this product?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#62CD14",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(removeItem(items[index]));
+
+        Swal.fire({
+          icon: "success",
+          title: "Product Deleted!",
+          text: `${items[index]?.title} has been removed from your cart.`,
+          confirmButtonText: "OK",
+        });
       }
-    >
+    });
+  };
+
+  return (
+    <div className={`bg-${darkMode ? "black" : "white"} text-${darkMode ? "white" : "black"} h-screen overflow-auto`}>
       <Navbar />
-      <div className="block pt-28 pl-5">
+      <div className="absolute pt-24 pl-5">
         <button
           onClick={() => {
             navigate("/products");
           }}
-          className={`bg-[#62CD14] hover:bg-[#469310] flex gap-2 justify-center items-center w-20 h-10 rounded`}
+          className={`bg-[#62CD14] hover:bg-[#469310] flex gap-2 justify-center items-center w-20 h-10 rounded text-white`}
         >
           <img
             src={backIcon}
@@ -99,16 +116,16 @@ const Cart = () => {
             width={10}
             style={{ fill: darkMode ? "#FFF" : "#000" }}
           />
-          <p className={`text-${darkMode ? "black" : "black"} text-lg`}>Back</p>
+          <p className={`text-lg`}>Back</p>
         </button>
       </div>
-      <div className="absolute w-full">
-        <section className="w-full pt- m-auto flex flex-wrap justify-center ">
+      <div className="w-full pt-24">
+        <section className="w-full m-auto flex flex-wrap justify-center ">
           {items.length !== 0 ? (
             items.map((item, index) => (
               <div
                 key={index}
-                className={`max-w-[400px] w-full sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/5 overflow-hidden m-4 rounded-md shadow-md p-4 transition duration-300 ease-in-out transform hover:shadow-xl ${
+                className={`w-full sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/5 overflow-hidden m-4 rounded-md shadow-md p-4 transition duration-300 ease-in-out transform hover:shadow-xl ${
                   darkMode ? "bg-[#171A1F]" : ""
                 }`}
               >
@@ -173,7 +190,7 @@ const Cart = () => {
 
                     <button
                       onClick={() => handleCheckout(index)}
-                      className={`bg-[#62CD14] hover:bg-[#469310] flex justify-center items-center w-full mt-4 h-10 rounded`}
+                      className={`bg-[#62CD14] hover:bg-[#469310] flex justify-center items-center w-full mt-4 h-10 rounded text-white`}
                     >
                       <p
                         className={`text-${
@@ -182,6 +199,14 @@ const Cart = () => {
                       >
                         Checkout
                       </p>
+                    </button>
+
+                    <button
+                      onClick={() => handleDelete(index)}
+                      className={`bg-red-500 hover:bg-red-600 text-white h-6 text-sm w-6 text-center rounded-full absolute top-0 right-0 mt-2`}
+                      style={{ cursor: "pointer" }}
+                    >
+                      x
                     </button>
                   </div>
                 </div>

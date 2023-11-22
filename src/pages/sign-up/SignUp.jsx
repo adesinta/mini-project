@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../features/Darkmode";
 import Swal from "sweetalert2";
 
-import ToggleButton from "../../components/ToggleDarkMode";
+import ToggleButton from "../../components/global-components/ToggleDarkMode";
 import logoImg from "../../assets/logo.svg";
 import marketImg from "../../assets/market-img.svg";
 
@@ -111,7 +111,9 @@ const SignUp = () => {
             </p>
           </div>
         </div>
-        <img src={marketImg} alt="" className="" />
+        <div className="hidden lg:block w-[80rem] h-screen">
+          <img src={marketImg} alt="" className="bg-cover w-full" />
+        </div>
       </div>
     </div>
   );

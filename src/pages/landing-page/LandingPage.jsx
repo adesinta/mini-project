@@ -3,7 +3,7 @@ import { useDarkMode } from "../../features/Darkmode";
 
 import welcomeImage from "../../assets/welcome-image.svg";
 
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/global-components/Navbar";
 import AboutUs from "../../components/landing-page/AboutUs";
 import ChatBox from "../../components/landing-page/ChatBox";
 import ContactUs from "../../components/landing-page/ContactUs";

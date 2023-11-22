@@ -8,9 +8,9 @@ import Swal from "sweetalert2";
 
 import productsHeader from "../../assets/products-header.svg";
 
-import Navbar from "../../components/Navbar";
-import Card from "../../components/Card";
-import Search from "../../components/Search";
+import Navbar from "../../components/global-components/Navbar";
+import Card from "../../components/global-components/Card";
+import Search from "../../components/global-components/Search";
 
 const Products = () => {
   const dispatch = useDispatch();

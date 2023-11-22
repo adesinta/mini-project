@@ -5,7 +5,7 @@ const AboutUs = () => {
   return (
       <div id="aboutUs" className="p-10 flex flex-col justify-center items-center text-justify gap-y-4">
         <h1 className="font-bold text-4xl pt-14">About Us</h1>
-        <p className="px-36 leading-loose">
+        <p className="lg:px-80 leading-loose">
           Welcome to Fresh Market, your ultimate destination for a high-quality
           shopping experience with fresh vegetables and fruits. We collaborate
           with trusted local farmers to bring you fresh products directly from
