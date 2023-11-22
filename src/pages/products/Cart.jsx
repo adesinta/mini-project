@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDarkMode } from "../../features/Darkmode";
 import { removeItem } from "../../features/CartSlice";
 import backIcon from "../../assets/back.svg";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/global-components/Navbar";
 import Swal from "sweetalert2";
 
 const Cart = () => {

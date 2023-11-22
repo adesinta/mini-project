@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../features/Darkmode";
 import Swal from "sweetalert2";
 
-import ToggleButton from "../../components/ToggleDarkMode";
+import ToggleButton from "../../components/global-components/ToggleDarkMode";
 import logoImg from "../../assets/logo.svg";
 import marketImg from "../../assets/market-img.svg";
 

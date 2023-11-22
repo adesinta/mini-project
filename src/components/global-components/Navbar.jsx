@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDarkMode } from "../features/Darkmode";
-import HumbergerIcon from "../assets/humberger-icon.svg";
-import LogoMarket from "../assets/logo.svg";
-import cartIcon from "../assets/cart-white.svg";
+import { useDarkMode } from "../../features/Darkmode";
+import HumbergerIcon from "../../assets/humberger-icon.svg";
+import LogoMarket from "../../assets/logo.svg";
+import cartIcon from "../../assets/cart-white.svg";
 import ToggleButton from "./ToggleDarkMode";
 import Swal from "sweetalert2";
 

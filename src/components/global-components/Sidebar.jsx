@@ -1,13 +1,13 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDarkMode } from "../features/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 import Swal from "sweetalert2";
 
-import logoImg from "../assets/logo.svg";
+import logoImg from "../../assets/logo.svg";
 import ToggleButton from "./ToggleDarkMode";
-import dashboardIcon from "../assets/dashboard-icon.svg";
-import productsIcon from "../assets/add-products-icon.svg";
-import logoutIcon from "../assets/logout.svg"
+import dashboardIcon from "../../assets/dashboard-icon.svg";
+import productsIcon from "../../assets/add-products-icon.svg";
+import logoutIcon from "../../assets/logout.svg"
 
 const Sidebar = () => {
   const { darkMode } = useDarkMode();

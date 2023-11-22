@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 
-import Input from "../Input";
-
 const ChatBox = () => {
   const configuration = new Configuration({
     apiKey: import.meta.env.VITE_OPENAI_KEY,
