@@ -196,8 +196,7 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
           <div className="flex items-center gap-x-4">
             <button
               onClick={() => {
-                handleScrollToSection("signIn");
-                clearActiveSection();
+                navigate("sign-in")
               }}
               className={activeSection === "signIn" ? "text-[#62CD14]" : ""}
             >
@@ -205,8 +204,7 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
             </button>
             <button
               onClick={() => {
-                handleScrollToSection("signUp");
-                clearActiveSection();
+                navigate("sign-up")
               }}
               className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]"
               style={signUpStyle}
