@@ -153,6 +153,7 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
           </p>
         </div>
       )}
+
       <div className="hidden sm:flex items-center gap-x-10">
         <div className="flex gap-x-4">
           {showHomeButton && (
@@ -196,7 +197,7 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
           <div className="flex items-center gap-x-4">
             <button
               onClick={() => {
-                navigate("/sign-in")
+                navigate("/sign-in");
               }}
               className={activeSection === "signIn" ? "text-[#62CD14]" : ""}
             >
@@ -204,7 +205,7 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
             </button>
             <button
               onClick={() => {
-                navigate("/sign-up")
+                navigate("/sign-up");
               }}
               className="bg-[#347C00] w-20 h-10 rounded hover:bg-[#2B6700]"
               style={signUpStyle}
@@ -232,132 +233,171 @@ const Navbar = ({ showNavbarOption, showHomeButton }) => {
           style={navbarStyle}
           className="sm:hidden absolute top-16 left-0 right-0 bg-white"
         >
-          <div className="flex justify-between pr-4 items-center text-center">
-            <div className="flex items-center p-4 space-x-2 text-white">
-              <img src={LogoMarket} alt="Logo" className="w-8 h-8" />
-              <p style={headerStyle} className="text-lg font-bold">
-                FreshMarket
+          <div className="flex flex-col">
+            <div className="flex justify-between pr-5">
+              <div className="flex items-center p-4 space-x-2 text-white">
+                <img src={LogoMarket} alt="Logo" className="w-8 h-8" />
+                <p style={headerStyle} className="text-lg font-bold">
+                  FreshMarket
+                </p>
+              </div>
+              <div className="flex gap-x-4">
+                {showNavbarOption && (
+                  <button
+                    onClick={() => {
+                      navigate("/cart");
+                      clearActiveSection();
+                    }}
+                  >
+                    <img
+                      src={cartIcon}
+                      alt=""
+                      width={30}
+                      style={{
+                        ...cartIconStyle,
+                        fill: darkMode ? "white" : "black",
+                      }}
+                    />
+                  </button>
+                )}
+                <ToggleButton />
+              </div>
+            </div>
+
+            <div className="pl-4">
+              <div className="pb-4">
+                {showHomeButton && (
+                  <button
+                    onClick={() => {
+                      navigate("/");
+                    }}
+                    className="hover:text-[#347C00]"
+                  >
+                    Home
+                  </button>
+                )}
+              </div>
+              {showHomeButton && (
+                <button
+                  onClick={() => {
+                    navigate("/cart");
+                    clearActiveSection();
+                  }}
+                  className="hover:text-[#347C00] pb-4"
+                >
+                  Cart
+                </button>
+              )}
+            </div>
+          </div>
+
+          {showNavbarOption && (
+            <div className="flex flex-col cursor-pointer pl-5 gap-y-4 pb-5">
+              <p
+                onClick={() => {
+                  navigate("/");
+                }}
+                id="beranda"
+                className="hover:text-[#62CD14]"
+              >
+                Home
+              </p>
+
+              <p
+                onClick={() => {
+                  navigate("/products");
+                }}
+                className=" hover:text-[#62CD14]"
+              >
+                Products
+              </p>
+              <p
+                onClick={() => {
+                  handleScrollToSection("aboutUs");
+                  clearActiveSection();
+                  toggleMobileMenu();
+                }}
+                className={
+                  activeSection === "aboutUs"
+                    ? "text-[#62CD14]"
+                    : "hover:text-[#62CD14]"
+                }
+              >
+                About Us
+              </p>
+
+              <p
+                onClick={() => {
+                  handleScrollToSection("chatbox");
+                  clearActiveSection();
+                  toggleMobileMenu();
+                }}
+                className={
+                  activeSection === "aboutUs"
+                    ? "text-[#62CD14]"
+                    : "hover:text-[#62CD14]"
+                }
+              >
+                Chat Box
+              </p>
+
+              <p
+                onClick={() => {
+                  handleScrollToSection("contact-us");
+                  clearActiveSection();
+                  toggleMobileMenu();
+                }}
+                className={
+                  activeSection === "aboutUs"
+                    ? "text-[#62CD14]"
+                    : "hover:text-[#62CD14]"
+                }
+              >
+                Contact
               </p>
             </div>
-            <div className="flex gap-x-4">
-              <button
-                onClick={() => {
-                  navigate("/cart");
-                  clearActiveSection();
-                }}
-              >
-                <img
-                  src={cartIcon}
-                  alt=""
-                  width={30}
-                  style={{
-                    ...cartIconStyle,
-                    fill: darkMode ? "white" : "white",
-                  }}
-                />
-              </button>
-              <ToggleButton />
-            </div>
-          </div>
-          <div className="flex flex-col cursor-pointer pl-5 gap-y-4 pb-5">
-            <p
-              onClick={() => {
-                navigate("/");
-              }}
-              id="beranda"
-              className="hover:text-[#62CD14]"
-            >
-              Home
-            </p>
-
-            <p
-              onClick={() => {
-                navigate("/products");
-              }}
-              className=" hover:text-[#62CD14]"
-            >
-              Products
-            </p>
-            <p
-              onClick={() => {
-                handleScrollToSection("aboutUs");
-                clearActiveSection();
-                toggleMobileMenu();
-              }}
-              className={
-                activeSection === "aboutUs"
-                  ? "text-[#62CD14]"
-                  : "hover:text-[#62CD14]"
-              }
-            >
-              About Us
-            </p>
-
-            <p
-              onClick={() => {
-                handleScrollToSection("chatbox");
-                clearActiveSection();
-                toggleMobileMenu();
-              }}
-              className={
-                activeSection === "aboutUs"
-                  ? "text-[#62CD14]"
-                  : "hover:text-[#62CD14]"
-              }
-            >
-              Chat Box
-            </p>
-
-            <p
-              onClick={() => {
-                handleScrollToSection("contact-us");
-                clearActiveSection();
-                toggleMobileMenu();
-              }}
-              className={
-                activeSection === "aboutUs"
-                  ? "text-[#62CD14]"
-                  : "hover:text-[#62CD14]"
-              }
-            >
-              Contact
-            </p>
-          </div>
+          )}
 
           {localStorage.getItem("isLoggedIn") ? (
-          <div>
-            <button
-              onClick={() => {
-                handleLogout();
-                clearActiveSection();
-              }}
-              className="bg-[#347C00] w-full text-white h-10 rounded hover:bg-[#2B6700]"
-            >
-              Log out
-            </button>
-          </div>
-        ) : (
-          <div className="flex gap-x-1">
-            <button
-              onClick={() => {
-                navigate("/sign-in")
-              }}
-              className={activeSection === "signIn" ? "text-[#62CD14] w-full bg-[#62CD14]" : "w-full h-10 rounded bg-[#62CD14] text-black hover:bg-[#2B6700] hover:text-white "}
-            >
-              Sign In
-            </button>
-            <button
-              onClick={() => {
-                navigate("/sign-up")
-              }}
-              className={activeSection === "signIn" ? "text-[#62CD14] w-full bg-[#62CD14]" : "w-full h-10 rounded bg-[#62CD14] text-black hover:bg-[#2B6700] hover:text-white "}
-            >
-              Sign Up
-            </button>
-  
-           
-          </div>
-        )}
+            <div>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  clearActiveSection();
+                }}
+                className="bg-[#347C00] w-full text-white h-10 rounded hover:bg-[#2B6700]"
+              >
+                Log out
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-x-1">
+              <button
+                onClick={() => {
+                  navigate("/sign-in");
+                }}
+                className={
+                  activeSection === "signIn"
+                    ? "text-[#62CD14] w-full bg-[#62CD14]"
+                    : "w-full h-10 rounded bg-[#62CD14] text-black hover:bg-[#2B6700] hover:text-white "
+                }
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => {
+                  navigate("/sign-up");
+                }}
+                className={
+                  activeSection === "signIn"
+                    ? "text-[#62CD14] w-full bg-[#62CD14]"
+                    : "w-full h-10 rounded bg-[#62CD14] text-black hover:bg-[#2B6700] hover:text-white "
+                }
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

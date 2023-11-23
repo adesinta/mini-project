@@ -203,7 +203,7 @@ const Cart = () => {
 
                     <button
                       onClick={() => handleDelete(index)}
-                      className={`bg-red-500 hover:bg-red-600 text-white h-6 text-sm w-6 text-center rounded-full absolute top-0 right-0 mt-2`}
+                      className={`bg-slate-300 hover:bg-red-600 text-black h-6 text-sm w-6 text-center rounded-full absolute top-4 right-6 mt-2`}
                       style={{ cursor: "pointer" }}
                     >
                       x
