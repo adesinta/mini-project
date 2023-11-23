@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDarkMode } from "../../components/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 import deleteIcon from "../../assets/delete.svg";
 import editIcon from "../../assets/edit.svg";
 import plusIcon from "../../assets/plus-icon.svg";
-import Sidebar from "../../components/Sidebar";
-import Search from "../../components/Search";
-import CreateProductModal from "../../components/CreateProductModal";
-import EditProductModal from "../../components/EditProductModal";
+import Sidebar from "../../components/global-components/Sidebar";
+import Search from "../../components/global-components/Search";
+import CreateProductModal from "../../components/global-components/CreateProductModal";
+import EditProductModal from "../../components/global-components/EditProductModal";
 
 const ProductsTable = () => {
   const navigate  = useNavigate()
@@ -59,7 +59,7 @@ const ProductsTable = () => {
     setShowModal(false);
   };
 
-  const editModal = (product) => {
+  const editModal = () => {
     setShowEditModal(true);
   };
 

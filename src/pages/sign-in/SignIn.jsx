@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDarkMode } from "../../components/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 import Swal from "sweetalert2";
 
-import ToggleButton from "../../components/ToggleDarkMode";
+import ToggleButton from "../../components//global-components/ToggleDarkMode";
 import logoImg from "../../assets/logo.svg";
 import marketImg from "../../assets/market-img.svg";
 
@@ -28,7 +28,10 @@ const SignIn = () => {
     const adminCredentials = { email: "admin@gmail.com", password: "admin123" };
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
-    if (email === adminCredentials.email && password === adminCredentials.password) {
+    if (
+      email === adminCredentials.email &&
+      password === adminCredentials.password
+    ) {
       localStorage.setItem("isLoggedIn", true);
 
       const user = {
@@ -45,7 +48,11 @@ const SignIn = () => {
           navigate("/dashboard-admin");
         }
       });
-    } else if (storedUser && storedUser.email === email && storedUser.password === password) {
+    } else if (
+      storedUser &&
+      storedUser.email === email &&
+      storedUser.password === password
+    ) {
       localStorage.setItem("isLoggedIn", true);
 
       const user = {
@@ -79,7 +86,7 @@ const SignIn = () => {
     >
       <div className="flex justify-between">
         <div className="">
-          <div className="w-[790px] flex justify-between p-4">
+          <div className="w-full md:w-[790px] flex flex-col justify-center items-center md:flex-row md:justify-between p-4">
             <div>
               <div
                 onClick={() => {
@@ -87,7 +94,7 @@ const SignIn = () => {
                 }}
                 className="flex gap-x-2 cursor-default"
               >
-                <img src={logoImg} alt="" />
+                <img src={logoImg} alt="" className="w-13 md:w-14" />
                 <h1
                   className={`bg-${darkMode ? "black" : "white"} text-${
                     darkMode ? "white" : "black"
@@ -98,16 +105,16 @@ const SignIn = () => {
               </div>
             </div>
             <div>
-              <div className="flex p-4 gap-x-4">
+              <div className="flex p-4 gap-x-4 text-center items-center">
                 <div>
-                  <p>Don't have an account?</p>
+                  <p className="text-sm">Don't have an account?</p>
                 </div>
                 <div>
                   <button
                     onClick={() => {
                       navigate("/sign-up");
                     }}
-                    className="text-[#62CD14]"
+                    className="text-[#62CD14] text-sm"
                   >
                     Sign Up
                   </button>
@@ -116,8 +123,9 @@ const SignIn = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center h-[600px]">
-            <div className="flex flex-col items-center gap-y-8">
+
+          <div className="flex items-center h-[400px] md:h-[800px] justify-center px-8 w-full ">
+            <div className="flex flex-col items-center gap-y-8" >
               <p className="font-bold text-4xl text-[#62CD14]">Sign In</p>
               <form onSubmit={handleLogin}>
                 <div className="flex flex-col gap-y-4">
@@ -128,7 +136,7 @@ const SignIn = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="example@gmail.com"
-                      className="text-black rounded w-[400px]"
+                      className="text-black rounded w-80 md:w-[400px]"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -138,7 +146,7 @@ const SignIn = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="enter your password"
-                      className="text-black rounded w-[400px]"
+                      className="text-black rounded w-80 md:w-[400px]"
                     />
                   </div>
                   <button
@@ -154,7 +162,9 @@ const SignIn = () => {
             </div>
           </div>
         </div>
-        <img src={marketImg} alt="" className="" />
+        <div className="hidden lg:block w-[80rem] h-screen">
+          <img src={marketImg} alt="" className="bg-cover w-full" />
+        </div>
       </div>
     </div>
   );

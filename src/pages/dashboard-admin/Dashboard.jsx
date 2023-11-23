@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDarkMode } from "../../components/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 import axios from "axios";
 
-import Sidebar from "../../components/Sidebar";
-import Search from "../../components/Search";
-import Card from "../../components/Card";
+import Sidebar from "../../components/global-components/Sidebar";
+import Search from "../../components/global-components/Search";
+import Card from "../../components/global-components/Card";
 
 const Dashboard = () => {
   const navigate = useNavigate();

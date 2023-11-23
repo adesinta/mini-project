@@ -22,6 +22,34 @@ const CreateProductModal = ({
     price: "",
   });
 
+  const validateForm = (formData) => {
+    const errors = {};
+
+    if (!formData.title) {
+      errors.title = "Product Name is required";
+    }
+
+    if (!formData.category) {
+      errors.category = "Category is required";
+    }
+
+    if (!formData.image) {
+      errors.image = "Image is required";
+    }
+
+    if (!formData.description) {
+      errors.description = "Description is required";
+    }
+
+    if (!formData.price) {
+      errors.price = "Price is required";
+    } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
+      errors.price = "Price must be a valid positive number";
+    }
+
+    return errors;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -98,7 +126,7 @@ const CreateProductModal = ({
             navigate("/products-table");
           }
         });
-
+        
         setNewProduct({
           title: "",
           category: "",
@@ -117,34 +145,6 @@ const CreateProductModal = ({
     } catch (error) {
       console.error("Error creating product:", error);
     }
-  };
-
-  const validateForm = (formData) => {
-    const errors = {};
-
-    if (!formData.title) {
-      errors.title = "Product Name is required";
-    }
-
-    if (!formData.category) {
-      errors.category = "Category is required";
-    }
-
-    if (!formData.image) {
-      errors.image = "Image is required";
-    }
-
-    if (!formData.description) {
-      errors.description = "Description is required";
-    }
-
-    if (!formData.price) {
-      errors.price = "Price is required";
-    } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
-      errors.price = "Price must be a valid positive number";
-    }
-
-    return errors;
   };
 
   return (

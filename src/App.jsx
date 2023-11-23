@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { DarkModeProvider } from "./components/Darkmode";
+import { DarkModeProvider } from "./features/Darkmode";
 
 import LandingPage from "./pages/landing-page/LandingPage";
 import SignIn from "./pages/sign-in/SignIn";
@@ -14,7 +14,7 @@ import Cart from "./pages/products/Cart";
 const App = () => {
   return (
     <div className="w-full h-screen overflow-x-hidden">
-        <DarkModeProvider>
+      <DarkModeProvider>
         <BrowserRouter>
             <Routes>
               <Route element={<LandingPage />} path="/" />
@@ -27,7 +27,7 @@ const App = () => {
               <Route element={<Cart />} path="/cart" />
             </Routes>
         </BrowserRouter>
-    </DarkModeProvider>
+     </DarkModeProvider>
       </div>
   );
 };

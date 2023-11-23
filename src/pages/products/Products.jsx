@@ -2,16 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../features/CartSlice";
-import { useDarkMode } from "../../components/Darkmode";
+import { useDarkMode } from "../../features/Darkmode";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import backIcon from "../../assets/back.svg"
 import productsHeader from "../../assets/products-header.svg";
 
-import Navbar from "../../components/Navbar";
-import Card from "../../components/Card";
-import Search from "../../components/Search";
+import Navbar from "../../components/global-components/Navbar";
+import Card from "../../components/global-components/Card";
+import Search from "../../components/global-components/Search";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -127,9 +126,9 @@ const Products = () => {
     <div className="w-full h-screen">
       <Navbar showNavbarOption={false} showHomeButton={true}/>
       <div style={pageStyle}>
-        <img src={productsHeader} alt="" className="w-full" />
-        <div className="flex justify-between px-8">
-          <div className="inline-flex rounded-md shadow-sm mt-10" role="group">
+        <img src={productsHeader} alt="" className="w-full h-60 md:h-auto" />
+        <div className="flex flex-col md:flex-row justify-between px-8">
+          <div className="inline-flex rounded-md shadow-sm md:mt-10" role="group">
             <button
               onClick={() => {
                 setCategoryFilter("all");
@@ -175,7 +174,7 @@ const Products = () => {
             </p>
           </div>
         ) : (
-          <div className="w-2xl p-8 grid grid-cols-5 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="w-2xl p-8 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {currentCards.map((product, index) => (
               <Card
                 key={index}
